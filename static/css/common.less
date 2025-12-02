@@ -1,0 +1,98 @@
+html,
+body {
+  font-size: 16px;
+}
+ul,
+li,
+pre,
+code {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.dumi-default-previewer {
+  border: none;
+}
+
+:root {
+  --kwc-default-previewer-border-color: #e4e9ec;
+  --kwc-default-previewer-icon-color: #666666;
+}
+
+[data-prefers-color='dark'] {
+  --kwc-default-previewer-border-color: #3d444b;
+  --kd-c-tabs-color-text: #c6c9cd;
+  --kwc-default-previewer-icon-color: #c6c9cd;
+
+}
+
+.dumi-default-previewer {
+  .dumi-default-previewer-demo {
+    padding: 0;
+    .kwc-default-previewer-demo-container {
+      display: flex;
+      flex-direction: column;
+      .kwc-default-previewer-demo-preview {
+        border: 1px solid var(--kwc-default-previewer-border-color);
+        border-bottom: none;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+        padding: 40px 24px;
+        height: 100%;
+      }
+      .kwc-default-previewer-demo-code-wrap {
+        border: 1px solid var(--kwc-default-previewer-border-color);
+        border-top: none;
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        display: flex;
+        flex-direction: column;
+        .kwc-default-previewer-demo-action {
+          border-top: 1px dashed var(--kwc-default-previewer-border-color);
+          padding: 4px 10px;
+          text-align: end;
+          .demo-code-icon {
+            color: var(--kwc-default-previewer-icon-color);
+            cursor: pointer;
+            align-self: flex-end;
+          }
+        }
+        .kwc-default-previewer-demo-code {
+          .kd-tabs {
+            .kd-tabs-navs {
+              border-bottom: 1px solid var(--kwc-default-previewer-border-color);
+              .kd-tabs-tab-list {
+                left: 50% !important;
+                transform: translate(-50%, 0);
+              }
+            }
+          }
+          &.show {
+            visibility: visible;
+            height: 100%;
+            border-top: 1px dashed var(--kwc-default-previewer-border-color);
+          }
+          &.hide {
+            visibility: hidden;
+            height: 0;
+          }
+          .kwc-code-block {
+            position: relative;
+
+            > pre {
+              margin: 0 !important;
+            }
+            &-copyicon {
+              position: absolute;
+              right: 6px;
+              top: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
+  .dumi-default-previewer-meta {
+    display: none;
+  }
+}
