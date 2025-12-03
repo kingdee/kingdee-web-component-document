@@ -8,10 +8,11 @@ interface CodeBlockProps {
   codeString: string;
   language: string;
   isDark: boolean;
+  isEnglish: boolean
 }
 
 export default function CodeBlock(props: CodeBlockProps) {
-  const { codeString, language, isDark } = props;
+  const { codeString, language, isDark, isEnglish } = props;
 
   return (
     <div className="kwc-code-block">
@@ -25,7 +26,7 @@ export default function CodeBlock(props: CodeBlockProps) {
         <Clipboard
           content={codeString}
           onSuccess={() => {
-            Message.success(`复制成功`);
+            Message.success(isEnglish ? 'Copy successful' : '复制成功');
           }}
         />
       </div>

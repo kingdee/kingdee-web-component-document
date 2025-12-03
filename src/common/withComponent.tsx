@@ -1,5 +1,5 @@
 import { Icon, Tabs, Tooltip } from '@kdcloudjs/kdesign';
-import { usePrefersColor, useLocale } from 'dumi';
+import { useLocale, usePrefersColor } from 'dumi';
 import React, { type FC, useEffect, useState } from 'react';
 import CodeBlock from './codeBlock';
 export interface Info {
@@ -43,6 +43,8 @@ export default function withComponent(Component: any): FC<ComponentProps> {
       return () => observer.disconnect();
     }, []);
 
+    const isEnglish: boolean = locale.id === 'en-US';
+
     const [theme] = usePrefersColor();
     const codeClassName = `kwc-default-previewer-demo-code ${
       showCode ? 'show' : 'hide'
@@ -59,13 +61,34 @@ export default function withComponent(Component: any): FC<ComponentProps> {
         </div>
         <div className="kwc-default-previewer-demo-code-wrap">
           <div className="kwc-default-previewer-demo-action">
-            <Tooltip placement="top" tip={showCode ? '隐藏代码' : '显示代码'}>
-              <Icon
-                onClick={handleChange}
-                className="demo-code-icon"
-                type="code"
-              />
-            </Tooltip>
+            {(() => {
+              const tip = showCode
+                ? isEnglish
+                  ? 'Hide code'
+                  : '隐藏代码'
+                : isEnglish
+                ? 'Show code'
+                : '显示代码';
+
+              return (
+                <Tooltip placement="top" tip={tip}>
+                  <Icon
+                    onClick={handleChange}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleChange();
+                      }
+                    }}
+                    className="demo-code-icon"
+                    type="code"
+                    tabIndex={0}
+                    role="button"
+                    aria-pressed={showCode}
+                  />
+                </Tooltip>
+              );
+            })()}
           </div>
           <div className={codeClassName}>
             <Tabs activeKey={curKey} onChange={showChange}>
@@ -75,6 +98,7 @@ export default function withComponent(Component: any): FC<ComponentProps> {
                     codeString={item.content}
                     language={item.language}
                     isDark={theme === 'dark'}
+                    isEnglish={isEnglish}
                   />
                 </Tabs.TabPane>
               ))}
