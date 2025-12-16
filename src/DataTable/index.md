@@ -1,6 +1,6 @@
 ---
 toc: content # 导航在内容区才显示，在左侧导航栏不显示
-title: 表格 Table # 组件的标题，会在菜单侧边栏展示
+title: Table 表格 # 组件的标题，会在菜单侧边栏展示
 group:
   title: 数据展示
 ---
@@ -22,8 +22,8 @@ const codeInfo = [
     content: `import { KingdeeElement } from '@kdcloudjs/kwc';
 
 export default class BasicDatatable extends KingdeeElement {
-  this.data = ${JSON.stringify(data, null, 2)};
-  this.columns = ${JSON.stringify(columns, null, 2)};
+  data = ${JSON.stringify(data, null, 2)};
+  columns = ${JSON.stringify(columns, null, 2)};
 }`,
   },
   {
@@ -52,8 +52,8 @@ const codeInfo = [
     content: `import { KingdeeElement } from '@kdcloudjs/kwc';
 
 export default class BasicDatatable extends KingdeeElement {
-  this.data = ${JSON.stringify(data, null, 2)};
-  this.columns = ${JSON.stringify(columns, null, 2)};
+  data = ${JSON.stringify(data, null, 2)};
+  columns = ${JSON.stringify(columns, null, 2)};
 }`,
   },
   {
@@ -95,9 +95,9 @@ const codeInfo = [
 import customRowTemplate from './customRowTemplate.html'
 
 export default class BasicDatatable extends KingdeeElement {
-  this.data = ${JSON.stringify(data, null, 2)};
-  this.columns = ${JSON.stringify(columns, null, 2)};
-  this.expandable = {
+  data = ${JSON.stringify(data, null, 2)};
+  columns = ${JSON.stringify(columns, null, 2)};
+  expandable = {
     defaultExpandedRowKeys: [0],
     expandRowTemplate: customRowTemplate
   }
@@ -146,7 +146,7 @@ export default () => {
 
       const span = document.createElement('span');
       span.textContent = `This is No.${Number(index + 1)} description.`;
-      span.className = 'my-inserted-p';
+      span.style.cssText = `;padding-left: 5px;`
 
       customRow.appendChild(span);
     };
@@ -185,7 +185,7 @@ export default () => {
         columns={columns}
         data={data}
         expandable={expandable}
-        hide-checkbox-column={true}
+        hideCheckboxColumn={true}
       />
     </div>
   );
@@ -208,9 +208,9 @@ const codeInfo = [
 import customRowTemplate from './customRowTemplate.html'
 
 export default class BasicDatatable extends KingdeeElement {
-  this.data = ${JSON.stringify(data, null, 2)};
-  this.columns = ${JSON.stringify(columns, null, 2)};
-  this.expandable = {
+  data = ${JSON.stringify(data, null, 2)};
+  columns = ${JSON.stringify(columns, null, 2)};
+  expandable = {
     defaultExpandedRowKeys: [0],
     expandRowTemplate: customRowTemplate,
     expandRowExtraParams: {
@@ -313,7 +313,7 @@ export default () => {
           columns={columns}
           data={data}
           expandable={expandable}
-          hide-checkbox-column={true}
+          hideCheckboxColumn={true}
         />
       </div>
       <kdcq-datatable
@@ -341,9 +341,9 @@ const codeInfo = [
     content: `import { KingdeeElement } from '@kdcloudjs/kwc';
 
 export default class BasicDatatable extends KingdeeElement {
-  this.data = ${JSON.stringify(data, null, 2)};
-  this.columns = ${JSON.stringify(columns, null, 2)};
-  this.rangeSelection = {
+  data = ${JSON.stringify(data, null, 2)};
+  columns = ${JSON.stringify(columns, null, 2)};
+  rangeSelection = {
     rangeSelectedChange: this.rangeSelectedChange
   }
 
@@ -389,36 +389,142 @@ export default () => (
 ```jsx
 import { DataTable } from 'kwc';
 import { data, columns } from './data.js';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 const codeInfo = [
   {
     language: 'javascript',
     content: `import { KingdeeElement } from '@kdcloudjs/kwc';
 
 export default class BasicDatatable extends KingdeeElement {
-  this.data = ${JSON.stringify(data, null, 2)};
-  this.columns = ${JSON.stringify(columns, null, 2)};
-  this.loading = true
+  noDataSwitch = false;
+  loadingSwitch = false;
+  checkboxSwitch = true;
+  rowNumberSwitch = false;
+
+  toggleNoDataSwitch() {
+    this.noDataSwitch = !this.noDataSwitch;
+  }
+
+  toggleLoadingSwitch() {
+    this.loadingSwitch = !this.loadingSwitch;
+  }
+
+  toggleCheckBoxSwitch() {
+    this.checkboxSwitch = !this.checkboxSwitch;
+  }
+
+  toggleRowNumberSwitch() {
+    this.rowNumberSwitch = !this.rowNumberSwitch;
+  }
+
+  get getCheckboxSwitched() {
+    return !this.checkboxSwitch;
+  }
+
+  data = noDataSwitch ? [] : ${JSON.stringify(data, null, 2)};
+  columns = ${JSON.stringify(columns, null, 2)};
 }`,
   },
   {
     language: 'html',
-    content: `<template>
-    <kd-datatable key-field='id' data={data} columns={columns} loading={loading}></kd-datatable>
-</template>`,
+    content: ` <div class="kwc-common-container">
+    <kd-switch checked={noDataSwitch} label="No Data" onclick={toggleNoDataSwitch}></kd-switch>
+    <kd-switch checked={loadingSwitch} label="Loading" onclick={toggleLoadingSwitch}></kd-switch>
+    <kd-switch checked={checkboxSwitch} label="Checkbox" onclick={toggleCheckBoxSwitch}></kd-switch>
+    <kd-switch checked={rowNumberSwitch} label="Row Number" onclick={toggleRowNumberSwitch}></kd-switch>
+  </div>
+  <kd-datatable
+    key-field="id"
+    data={data}
+    columns={columns}
+    loading={loadingSwitch}
+    show-row-number-column={rowNumberSwitch}
+    hide-checkbox-column={getCheckboxSwitched}
+  ></kd-datatable>`,
   },
+  {
+    language: 'css',
+    content: `.kwc-common-container {
+  display: flex;
+  gap: 48px;
+}
+`
+  }
 ];
 
 export default () => {
   const [noData, setNoData] = useState(false);
   const [loading, setLoading] = useState(false);
-  const noDataRef = useRef(false);
+  const [checkbox, setCheckbox] = useState(true);
+  const [rownumber, setRowNumber] = useState(false);
+  const noDataRef = useRef(null);
+  const loadingRef = useRef(null);
+  const checkboxRef = useRef(null);
+  const rowNumberRef = useRef(null);
+
+  const handleClick = (e) => {
+    const switchType = e?.target.getAttribute('data-switch-type');
+    switch (switchType) {
+      case 'nodata':
+        setNoData(e?.detail.checked);
+        break;
+      case 'loading':
+        setLoading(e?.detail.checked);
+        break;
+      case 'checkbox':
+        setCheckbox(e?.detail.checked);
+        break;
+      case 'rownumber':
+        setRowNumber(e?.detail.checked);
+        break;
+      default:
+        break;
+    }
+  };
+
+  useEffect(() => {
+    const noDataEle = noDataRef.current;
+    const loadingEle = loadingRef.current;
+    const checkboxEle = checkboxRef.current;
+    const rowNumberEle = rowNumberRef.current;
+    const domList = [noDataEle, loadingEle, checkboxEle, rowNumberEle];
+    domList.forEach((dom) => {
+      dom?.addEventListener('click', handleClick);
+    });
+    return () => {
+      domList.forEach((dom) => {
+        dom?.removeEventListener('click', handleClick);
+      });
+    };
+  }, []);
 
   return (
     <>
       <div className="kwcdoc-common-container" style={{ marginBottom: '20px' }}>
-        <kdcq-switch ref={noDataRef} label="No Data" checked={noData} />
-        <kdcq-switch label="loading" checked={loading} />
+        <kdcq-switch
+          data-switch-type="nodata"
+          ref={noDataRef}
+          label="No Data"
+          checked={noData}
+        />
+        <kdcq-switch
+          data-switch-type="loading"
+          ref={loadingRef}
+          label="Loading"
+          checked={loading}
+        />
+        <kdcq-switch
+          data-switch-type="checkbox"
+          ref={checkboxRef}
+          label="Checkbox"
+          checked={checkbox}
+        />
+        <kdcq-switch
+          data-switch-type="rownumber"
+          ref={rowNumberRef}
+          label="Row Number"
+          checked={rownumber}
+        />
       </div>
       <div>
         <DataTable
@@ -426,6 +532,8 @@ export default () => {
           columns={columns}
           data={noData ? [] : data}
           loading={loading}
+          hideCheckboxColumn={!checkbox}
+          showRowNumberColumn={rownumber}
         />
       </div>
     </>

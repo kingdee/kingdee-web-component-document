@@ -45,5 +45,5 @@ export const columns = [
     { label: 'Gender', fieldName: 'Gender', type: 'text', initialWidth: 80, },
     { label: 'Age', fieldName: 'Age', type: 'number', initialWidth: 80, },
     { label: 'Position', fieldName: 'Position', initialWidth: 180 },
-    { label: 'Email', fieldName: 'Email', type: 'text', initialWidth: 220, },
+    { label: 'Email', fieldName: 'Email', type: 'text', initialWidth: 260, },
 ]

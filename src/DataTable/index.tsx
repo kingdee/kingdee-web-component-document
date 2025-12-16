@@ -4,7 +4,15 @@ const DataTable = (props: ComponentProps) => {
   const cqRef = useRef(null);
 
   useEffect(() => {
-    const propsList = ['data', 'columns', 'expandable', 'rangeSelection', 'loading'];
+    const propsList = [
+      'data',
+      'columns',
+      'expandable',
+      'rangeSelection',
+      'loading',
+      'hideCheckboxColumn',
+      'showRowNumberColumn'
+    ];
     for (const key in props) {
       if (key !== 'codeInfo' && propsList.includes(key) && cqRef.current) {
         (cqRef.current as any)[key] = (props as any)[key];
@@ -16,7 +24,6 @@ const DataTable = (props: ComponentProps) => {
       ref={cqRef}
       key-field="id"
       max-row-selection={props['max-row-selection']}
-      hide-checkbox-column={props['hide-checkbox-column']}
     ></kdcq-datatable>
   );
 };
