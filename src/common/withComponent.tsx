@@ -14,7 +14,7 @@ export interface ComponentProps {
 export default function withComponent(Component: any): FC<ComponentProps> {
   const ComponentWrap: FC<ComponentProps> = (props) => {
     const { codeInfo, ...rest } = props;
-    const [curKey, setCurKey] = useState<string | number>('javascript');
+    const [curKey, setCurKey] = useState<string | number>('javascript0');
     const [showCode, setShowCode] = useState<boolean>(false);
     const [direction, setDirection] = useState(
       document.documentElement.getAttribute('data-direction') || 'ltr',

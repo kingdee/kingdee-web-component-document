@@ -10,7 +10,7 @@ const DataTable = (props: ComponentProps) => {
         (cqRef.current as any)[key] = (props as any)[key];
       }
     }
-  }, []);
+  }, [props]);
   return (
     <kdcq-datatable
       ref={cqRef}
