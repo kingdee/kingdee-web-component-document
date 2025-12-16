@@ -29,11 +29,17 @@ export default class Input extends KingdeeElement {}`,
   },
 ];
 
-export default () => <Input.Default codeInfo={codeInfo} label="Label" placeholder="Enter something"/>;
+export default () => (
+  <Input.Default
+    codeInfo={codeInfo}
+    label="Label"
+    placeholder="Enter something"
+  />
+);
 ```
 
-
 ## 基本用法
+
 输入框的基本用法
 
 ```jsx
@@ -56,12 +62,15 @@ export default class Input extends KingdeeElement {}`,
   },
 ];
 
-export default () => <Input.Default codeInfo={codeInfo} label="Label" placeholder="Basic usage" />;
+export default () => (
+  <Input.Default codeInfo={codeInfo} label="Label" placeholder="Basic usage" />
+);
 ```
 
-
 ## 输入框状态
+
 输入框可设置禁用、只读状态
+
 ```jsx
 import { Input } from 'kwc';
 
@@ -91,7 +100,9 @@ export default () => <Input.Status codeInfo={codeInfo} />;
 ```
 
 ## 输入框尺寸
-输入框定义了三种尺寸large，medium，small，分别是24px，32px，40px。
+
+输入框定义了三种尺寸 large，medium，small，分别是 24px，32px，40px。
+
 ```jsx
 import { Input } from 'kwc';
 
@@ -120,7 +131,9 @@ export default () => <Input.Size codeInfo={codeInfo} />;
 ```
 
 ## 形态变体
-可设置标题位置，可选值包括vertical，inline，hidden。
+
+可设置标题位置，可选值包括 vertical，inline，hidden。
+
 ```jsx
 import { Input } from 'kwc';
 
@@ -149,7 +162,9 @@ export default () => <Input.Variant codeInfo={codeInfo} />;
 ```
 
 ## 标题位置
-可设置标题位置，可选值包括vertical，inline，hidden
+
+可设置标题位置，可选值包括 vertical，inline，hidden
+
 ```jsx
 import { Input } from 'kwc';
 
@@ -178,7 +193,9 @@ export default () => <Input.LabelPosition codeInfo={codeInfo} />;
 ```
 
 ## 必录
+
 可设置必录
+
 ```jsx
 import { Input } from 'kwc';
 
@@ -205,7 +222,9 @@ export default () => <Input.Required codeInfo={codeInfo} />;
 ```
 
 ## 带清除图标
+
 带清除图标的输入框，点击图标删除所有内容。
+
 ```jsx
 import { Input } from 'kwc';
 
@@ -233,7 +252,9 @@ export default () => <Input.WithClearIcon codeInfo={codeInfo} />;
 ```
 
 ## 反馈状态及提示语
+
 可以设置成功和错误状态，并定义提示语。
+
 ```jsx
 import { Input } from 'kwc';
 
@@ -247,8 +268,8 @@ export default class Input extends KingdeeElement {}`,
   {
     language: 'html',
     content: `<template>
-  <kd-input label="Label" placeholder='Success' status='success' message='请输入正确的格式'></kd-input>
-  <kd-input label="Label" placeholder='Error' status='error' message='请输入正确的格式'></kd-input>
+  <kd-input label="Label" placeholder='Success' state='success' message='请输入正确的格式'></kd-input>
+  <kd-input label="Label" placeholder='Error' state='error' message='请输入正确的格式'></kd-input>
 </template>`,
   },
   {
@@ -260,9 +281,10 @@ export default class Input extends KingdeeElement {}`,
 export default () => <Input.FeedbackAndTip codeInfo={codeInfo} />;
 ```
 
-
 ## 字数限制
+
 设置 min-length 限制最小字数， max-length 限制最大字数。
+
 ```jsx
 import { Input } from 'kwc';
 
@@ -290,7 +312,9 @@ export default () => <Input.Limit codeInfo={codeInfo} />;
 ```
 
 ## 搜索框
+
 带有搜索按钮的输入框，用于内容检索。
+
 ```jsx
 import { Input } from 'kwc';
 
@@ -317,7 +341,9 @@ export default () => <Input.Search codeInfo={codeInfo} />;
 ```
 
 ## 密码输入框
+
 用于密码输入。
+
 ```jsx
 import { Input } from 'kwc';
 
@@ -345,7 +371,9 @@ export default () => <Input.Password codeInfo={codeInfo} />;
 ```
 
 ## 多行文本
-用于多行输入，可通过autosize配置自适应内容高度。
+
+用于多行输入，可通过 autosize 配置自适应内容高度。
+
 ```jsx
 import { Input } from 'kwc';
 
@@ -375,40 +403,40 @@ export default () => <Input.Textarea codeInfo={codeInfo} />;
 
 ## API
 
-| 属性           | 说明                                                         | 类型    | 默认值   | 版本  |
-| -------------- | ------------------------------------------------------------ | ------- | -------- | ----- |
-| label          | 标题                                                         |         | -        | 1.0.0 |
-| name           | 数据提交标识                                                 | string  | -        | 1.0.0 |
-| disabled       | 设置输入框禁用状态                                           | boolean | FALSE    | 1.0.0 |
-| read-only      | 设置输入框只读状态                                           | boolean | FALSE    | 1.0.0 |
-| required       | 设置输入框必录状态                                           | boolean | FALSE    | 1.0.0 |
-| show-clear     | 是否展示清除按钮                                             | boolean | FALSE    | 1.0.0 |
-| value          | 输入框的值                                                   |         | -        | 1.0.0 |
-| placeholder    | 输入框为空时的提示语                                         |         | -        | 1.0.0 |
-| auto-complete  | 自动填充，可选值包括off、on；当type为password时不支持        |         | off      | 1.0.0 |
-| size           | 输入框的尺寸，可选值包括large、medium、small                 |         | medium   | 1.0.0 |
-| state          | 反馈状态，可选值包括error、success                           |         | -        | 1.0.0 |
-| message        | 反馈提示语，设置state时显示                                  |         | -        | 1.0.0 |
-| label-position | 标题位置，可选值包括vertical、inline、hidden                 |         | vertical | 1.0.0 |
-| variant        | 输入框的视觉样式变体，可选值包括underlined、outlined、borderless |         | outlined | 1.0.0 |
-| min-length     | 允许输入最小字符数                                           | number  | -        | 1.0.0 |
-| max-length     | 允许输入最大字符数；最大为2000                               | number  | 2000     | 1.0.0 |
-| type           | 输入框的类型，可选值包括text、password                       |         | text     | 1.0.0 |
-| onfocus        | 获取焦点时触发                                               |         | -        | 1.0.0 |
-| onblur         | 失去焦点时触发                                               |         | -        | 1.0.0 |
-| onChange       | 值改变时触发                                                 |         | -        | 1.0.0 |
+| 属性           | 说明                                                              | 类型    | 默认值   | 版本  |
+| -------------- | ----------------------------------------------------------------- | ------- | -------- | ----- |
+| label          | 标题                                                              |         | -        | 1.0.0 |
+| name           | 数据提交标识                                                      | string  | -        | 1.0.0 |
+| disabled       | 设置输入框禁用状态                                                | boolean | FALSE    | 1.0.0 |
+| read-only      | 设置输入框只读状态                                                | boolean | FALSE    | 1.0.0 |
+| required       | 设置输入框必录状态                                                | boolean | FALSE    | 1.0.0 |
+| show-clear     | 是否展示清除按钮                                                  | boolean | FALSE    | 1.0.0 |
+| value          | 输入框的值                                                        |         | -        | 1.0.0 |
+| placeholder    | 输入框为空时的提示语                                              |         | -        | 1.0.0 |
+| auto-complete  | 自动填充，可选值包括 off、on；当 type 为 password 时不支持        |         | off      | 1.0.0 |
+| size           | 输入框的尺寸，可选值包括 large、medium、small                     |         | medium   | 1.0.0 |
+| state          | 反馈状态，可选值包括 error、success                               |         | -        | 1.0.0 |
+| message        | 反馈提示语，设置 state 时显示                                     |         | -        | 1.0.0 |
+| label-position | 标题位置，可选值包括 vertical、inline、hidden                     |         | vertical | 1.0.0 |
+| variant        | 输入框的视觉样式变体，可选值包括 underlined、outlined、borderless |         | outlined | 1.0.0 |
+| min-length     | 允许输入最小字符数                                                | number  | -        | 1.0.0 |
+| max-length     | 允许输入最大字符数；最大为 2000                                   | number  | 2000     | 1.0.0 |
+| type           | 输入框的类型，可选值包括 text、password                           |         | text     | 1.0.0 |
+| onfocus        | 获取焦点时触发                                                    |         | -        | 1.0.0 |
+| onblur         | 失去焦点时触发                                                    |         | -        | 1.0.0 |
+| onChange       | 值改变时触发                                                      |         | -        | 1.0.0 |
 
 ### input.password
 
 同 Input 属性，外加：
 
-| 属性             | 说明                                 | 类型    | 默认值 | 版本  |
-| ---------------- | ------------------------------------ | ------- | ------ | ----- |
-| password-visible | 当type为password时，设置密码是否可见 | boolean | FALSE  | 1.0.0 |
+| 属性             | 说明                                     | 类型    | 默认值 | 版本  |
+| ---------------- | ---------------------------------------- | ------- | ------ | ----- |
+| password-visible | 当 type 为 password 时，设置密码是否可见 | boolean | FALSE  | 1.0.0 |
 
 ## 设计变量
 
-| 类别       | Token名称                                    | 说明                       | 默认值                                   |
+| 类别       | Token 名称                                   | 说明                       | 默认值                                   |
 | ---------- | -------------------------------------------- | -------------------------- | ---------------------------------------- |
 | color      | --kdds-c-input-icon-color-default            | 图标默认颜色               | var(--kdds-g-color-on-surface-3)         |
 | color      | --kdds-c-input-icon-color-hover              | 图标悬停颜色               | var(--kdds-g-color-accent-1)             |

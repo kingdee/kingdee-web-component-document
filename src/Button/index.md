@@ -9,6 +9,133 @@ group:
 按钮是一种用于触发特定操作的组件。
 
 ## 基本用法
+按钮分为主要按钮、次要按钮、幽灵按钮和文本按钮四种。
+```jsx
+import { Button } from 'kwc';
+
+const codeInfo = [
+  {
+    language: 'javascript',
+    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
+
+export default class ButtonBasic extends KingdeeElement {
+
+}`,
+  },
+  {
+    language: 'html',
+    content: `<template>
+      <kd-button label="Button" variant="primary"></kd-button>
+      <kd-button label="Button" variant="secondary"></kd-button>
+      <kd-button label="Button" variant="ghost"></kd-button>
+      <kd-button label="Button" variant="text"></kd-button>
+</template>
+    `,
+  },
+  {
+    language: 'css',
+    content: '',
+  },
+];
+
+export default () => <Button codeInfo={codeInfo} label="Button" type="1" />;
+```
+
+## 图标按钮
+Button 可以嵌入图标
+```jsx
+import { Button } from 'kwc';
+
+const codeInfo = [
+  {
+    language: 'javascript',
+    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
+
+export default class ButtonBasic extends KingdeeElement {
+
+}`,
+  },
+  {
+    language: 'html',
+    content: `<template>
+      <kd-button icon-name="kdfont-zengjia3" class="icon-button" ></kd-button>
+      <kd-button label="Button" icon-name="kdfont-zengjia3" label='Button'></kd-button>
+</template>`,
+  },
+  {
+    language: 'css',
+    content: `.icon-button {
+     --kdds-c-button-prefixicon-margin-right: 0px,
+     --kdds-c-button-sizing-min-width-medium: auto
+     }`,
+  },
+];
+
+export default () => <Button codeInfo={codeInfo} type="2" />;
+```
+## 按钮形状
+Button 有多种形状，square - 长方形 (默认), circle - 圆形, round - 全圆角, 圆形按钮仅支持传入图标，传入文字不会渲染。
+```jsx
+import { Button } from 'kwc';
+
+const codeInfo = [
+  {
+    language: 'javascript',
+    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
+
+export default class ButtonBasic extends KingdeeElement {
+
+}`,
+  },
+  {
+    language: 'html',
+    content: `<template>
+        <kd-button icon-name="kdfont-zengjia3" shape='square' label="Button" ></kd-button>
+        <kd-button icon-name="kdfont-zengjia3" shape='circle' label="Button" ></kd-button>
+        <kd-button icon-name="kdfont-zengjia3" shape='round' label="Button" ></kd-button>
+</template>`,
+  },
+  {
+    language: 'css',
+    content: '',
+  },
+];
+
+export default () => <Button codeInfo={codeInfo} type="3" />;
+```
+
+## 按钮尺寸
+按钮分为：迷你、小、中、大，四种尺寸。高度分别为：24px/28px/32px/36px。推荐及默认为尺寸「中」。可在不同场景及不同业务需求选择适合尺寸。
+```jsx
+import { Button } from 'kwc';
+
+const codeInfo = [
+  {
+    language: 'javascript',
+    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
+
+export default class ButtonBasic extends KingdeeElement {
+
+}`,
+  },
+  {
+    language: 'html',
+    content: `<template>
+        <kdcq-button size='small' label="Button" ></kd-button>
+        <kdcq-button size='middle' label="Button" ></kd-button>
+        <kdcq-button size='large' label="Button" ></kd-button>
+</template>`,
+  },
+  {
+    language: 'css',
+    content: ``,
+  },
+];
+
+export default () => <Button codeInfo={codeInfo} type="4" />;
+```
+## 禁用按钮
+按钮的禁用状态。
 ```jsx
 import { Button } from 'kwc';
 
@@ -26,15 +153,69 @@ export default class ButtonBasic extends KingdeeElement {
   },
   {
     language: 'html',
-    content: '<kd-button label="按钮"></kd-button>',
+    content: `<kdcq-button disabled label="Button"></kd-button>`,
   },
   {
     language: 'css',
-    content: 'body { color: red; }',
+    content: ``,
   },
 ];
 
-export default () => <Button codeInfo={codeInfo} label="按钮" />;
+export default () => <Button codeInfo={codeInfo} type="5" />;
+```
+## 加载中按钮
+按钮的加载中状态。
+```jsx
+import { Button } from 'kwc';
+
+const codeInfo = [
+  {
+    language: 'javascript',
+    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
+
+export default class ButtonBasic extends KingdeeElement {
+
+}`,
+  },
+  {
+    language: 'html',
+    content: `<kdcq-button loading label="Button"></kd-button>`,
+  },
+  {
+    language: 'css',
+    content: ``,
+  },
+];
+
+export default () => <Button codeInfo={codeInfo} type="6" />;
+```
+## 长按钮
+按钮宽度随着容器宽度进行适配。
+```jsx
+import { Button } from 'kwc';
+
+const codeInfo = [
+  {
+    language: 'javascript',
+    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
+
+export default class ButtonBasic extends KingdeeElement {
+
+}`,
+  },
+  {
+    language: 'html',
+    content: `<div style={{ display: 'flex', gap: '10px',alignItems: 'center', width: '300px' }}>
+    <kdcq-button label="Button" stretch ></kd-button>
+</div>`,
+  },
+  {
+    language: 'css',
+    content: ``,
+  },
+];
+
+export default () => <Button codeInfo={codeInfo} type="7" />;
 ```
 ## API
 
