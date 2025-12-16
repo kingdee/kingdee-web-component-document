@@ -5,6 +5,7 @@ import CodeBlock from './codeBlock';
 export interface Info {
   language: string;
   content: string;
+  tabName?: string;
 }
 export interface ComponentProps {
   codeInfo: Info[];
@@ -92,8 +93,8 @@ export default function withComponent(Component: any): FC<ComponentProps> {
           </div>
           <div className={codeClassName}>
             <Tabs activeKey={curKey} onChange={showChange}>
-              {(codeInfo || []).map((item) => (
-                <Tabs.TabPane key={item.language} tab={item.language}>
+              {(codeInfo || []).map((item, index) => (
+                <Tabs.TabPane key={item.language + index} tab={item.tabName || item.language}>
                   <CodeBlock
                     codeString={item.content}
                     language={item.language}
