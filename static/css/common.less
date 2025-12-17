@@ -1,3 +1,5 @@
+@theme-color: #3863ff;
+
 html,
 body {
   font-size: 16px;
@@ -61,6 +63,12 @@ code {
             color: var(--kwc-default-previewer-icon-color);
             cursor: pointer;
             align-self: flex-end;
+            &.show {
+              color: @theme-color;
+            }
+          }
+          > *:hover{
+            color: @theme-color;
           }
         }
         .kwc-default-previewer-demo-code {
@@ -107,4 +115,156 @@ code {
 .kwcdoc-common-container {
   display: flex;
   gap: 48px;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  .dumi-default-doc-layout {
+    .dumi-default-header {
+      background-color: #ffffff;
+      box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.08);
+      .dumi-default-header-content {
+        height: 64px;
+        max-width: calc(100% - 4px);
+        .dumi-default-header-right {
+          .dumi-default-navbar {
+            justify-content: unset;
+            margin: 0 auto;
+            > li {
+              > a {
+                font-size: 14px;
+                color: #212121;
+                font-weight: 600;
+                &:hover {
+                  color: @theme-color;
+                }
+                &.active {
+                  color: @theme-color;
+                }
+              }
+            }
+          }
+          .dumi-default-header-right-aside {
+            .dumi-default-search-bar {
+              .dumi-default-search-bar-input {
+                height: 32px;
+                background-color: #f8f8f8;
+                border-color: #f8f8f8;
+                &:focus {
+                  border-color: @theme-color;
+                  box-shadow: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    > main {
+      max-width: unset;
+      padding: 0;
+      .dumi-default-sidebar {
+        background-color: #ffffff;
+        width: 270px;
+        border-inline-end: 1px solid #f0f0f0;
+        top: 64px;
+        height: calc(100vh - 64px);
+        max-height: unset;
+        padding: 0;
+        > dl.dumi-default-sidebar-group {
+          > dt {
+            padding-inline-start: 36px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #212121;
+          }
+          > dd {
+            padding: 0;
+          }
+          > dd,
+          dt {
+            margin: 0;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            > a {
+              height: 100%;
+              line-height: 40px;
+              padding-inline-start: 36px;
+              flex: 1;
+              font-weight: 400;
+              transition: none;
+              font-size: 14px;
+              color: #666666;
+            }
+            > a.active {
+              color: @theme-color;
+              background: rgba(35, 134, 238, 0.1);
+              position: relative;
+              &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 4px;
+                height: 100%;
+                background-color: @theme-color;
+              }
+            }
+          }
+          + dl {
+            padding: 0;
+            margin: 0;
+            border-top: none;
+            font-size: 14px;
+            font-weight: 400;
+            > dd {
+              > a {
+                padding-inline-start: 60px;
+              }
+            }
+          }
+        }
+      }
+      .dumi-default-content {
+        border-radius: unset;
+        padding: 40px 40px 0;
+        box-shadow: none;
+        .markdown {
+          p {
+            color: #666666;
+          }
+        }
+        .dumi-default-content-footer {
+          > nav > a {
+            color: @theme-color;
+          }
+        }
+        .dumi-default-footer {
+          a {
+            color: @theme-color;
+          }
+        }
+      }
+      .dumi-default-doc-layout-toc-wrapper {
+        top: 64px;
+        height: calc(100vh - 64px);
+        background-color: #ffffff;
+        margin: 0;
+        max-height: unset;
+        > h4 {
+          display: none;
+        }
+        a {
+          color: #666666;
+        }
+        .dumi-default-toc {
+          > li > a.active {
+            border-color: @theme-color;
+          }
+        }
+      }
+    }
+  }
 }

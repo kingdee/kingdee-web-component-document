@@ -328,9 +328,9 @@ export default () => {
 };
 ```
 
-## 框选
+## 范围框选
 
-框选。
+通过配置`range-selection`来实现范围框选，长按鼠标拖拽连续选中表格内矩形区域，支持选择回调函数与键盘辅助操作。
 
 ```jsx
 import { DataTable } from 'kwc';
@@ -548,11 +548,11 @@ export default () => {
 
 ## API
 
-**Table**
+### Table ###
 
 | 属性                   | 说明                                                                    | 类型    | 默认值  |
 | ---------------------- | ----------------------------------------------------------------------- | ------- | ------- |
-| columns                | 用于定义数据类型的列对象数组。必须包含 `label`、`fieldName` 和 `type`。 | array   | -       |
+| columns                | 用于定义数据类型的列对象数组。必须包含 `label`、`fieldName` 和 `type`。[配置项](#columns)       | array   | -       |
 | data                   | 要显示的数组数据。                                                      | array   | -       |
 | hide-checkbox-column   | 隐藏行选择的复选框或单选框列。                                          | boolean | `false` |
 | loading                | 显示加载动画                                                            | boolean | `false` |
@@ -560,8 +560,10 @@ export default () => {
 | max-row-selection      | 最大可选行数，值为正整数。默认为复选框选择，值为`1`时为单选。           | number  | -       |
 | selected-rows          | 通过`key-field`值列表实现程序化行选择。                                 | array   | -       |
 | show-row-number-column | 设置是否在第一列显示行号。                                              | boolean | `false` |
+| range-selection        | 范围框选。[配置项](#rangeselection)                     | object | -       |
+| expandable             | 行展开属性。[配置项](#expandable)                     | object | -       |
 
-**Columns**
+### Columns ###
 
 | 属性           | 说明                                                                                                                                                                     | 类型    | 默认值  |
 | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- | ------- |
@@ -573,7 +575,7 @@ export default () => {
 | hideLabel      | 指定是否隐藏列上的标签。                                                                                                                                                 | boolean | `false` |
 | initialWidth   | 初始化时列的宽度，必须在 min-column-width 和 max-column-width 值之间，或者在没有提供的情况下，在 50px 和 1000px 之间。                                                   | number  | -       |
 
-**Expandable**
+### Expandable ###
 
 | 属性                   | 说明                   | 类型     | 默认值  |
 | ---------------------- | ---------------------- | -------- | ------- |
@@ -584,7 +586,7 @@ export default () => {
 | expandRowTemplate      | 自定义行展开渲染模板   | html     | -       |
 | expandRowExtraParams   | 传递给行展开模板的参数 | object   | -       |
 
-**RangeSelection**
+### RangeSelection ###
 
 | 属性                | 说明         | 类型     | 默认值 |
 | ------------------- | ------------ | -------- | ------ |

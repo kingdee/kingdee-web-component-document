@@ -81,7 +81,7 @@ export default function withComponent(Component: any): FC<ComponentProps> {
                         handleChange();
                       }
                     }}
-                    className="demo-code-icon"
+                    className={`demo-code-icon ${showCode ? 'show' : 'hide'}`}
                     type="code"
                     tabIndex={0}
                     role="button"

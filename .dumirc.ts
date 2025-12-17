@@ -3,6 +3,7 @@ import { defineConfig } from 'dumi';
 export default defineConfig({
   outputPath: 'docs-dist',
   themeConfig: {
+    logo: '/logo.png',
     rtl: true,
     name: 'kwc',
     nav: {
@@ -20,5 +21,13 @@ export default defineConfig({
   locales: [
     { id: 'zh-CN', name: '中文' },
     { id: 'en-US', name: 'English' },
+  ],
+  mfsu: false,
+  links: [
+    {
+      rel: 'icon',
+      href: '/favicon.ico',
+      type: 'image/x-icon',
+    },
   ],
 });
