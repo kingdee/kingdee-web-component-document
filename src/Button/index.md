@@ -121,9 +121,9 @@ export default class ButtonBasic extends KingdeeElement {
   {
     language: 'html',
     content: `<template>
-        <kdcq-button size='small' label="Button" ></kd-button>
-        <kdcq-button size='middle' label="Button" ></kd-button>
-        <kdcq-button size='large' label="Button" ></kd-button>
+        <kd-button size='small' label="Button" ></kd-button>
+        <kd-button size='middle' label="Button" ></kd-button>
+        <kd-button size='large' label="Button" ></kd-button>
 </template>`,
   },
   {
@@ -153,7 +153,7 @@ export default class ButtonBasic extends KingdeeElement {
   },
   {
     language: 'html',
-    content: `<kdcq-button disabled label="Button"></kd-button>`,
+    content: `<kd-button disabled label="Button"></kd-button>`,
   },
   {
     language: 'css',
@@ -179,7 +179,7 @@ export default class ButtonBasic extends KingdeeElement {
   },
   {
     language: 'html',
-    content: `<kdcq-button loading label="Button"></kd-button>`,
+    content: `<kd-button loading label="Button"></kd-button>`,
   },
   {
     language: 'css',
@@ -206,7 +206,7 @@ export default class ButtonBasic extends KingdeeElement {
   {
     language: 'html',
     content: `<div style={{ display: 'flex', gap: '10px',alignItems: 'center', width: '300px' }}>
-    <kdcq-button label="Button" stretch ></kd-button>
+    <kd-button label="Button" stretch ></kd-button>
 </div>`,
   },
   {
