@@ -454,66 +454,40 @@ export default () => <_Modal codeInfo={codeInfo} />;
 
 | 属性            | 说明                                         | 类型    | 默认值   | 版本  |
 | --------------- | -------------------------------------------- | ------- | -------- | ----- |
-| label           | 标题                                         | string  | -        | 1.0.0 |
-| label-position  | 标题位置，可选值包括vertical、inline、hidden | string  | vertical | 1.0.0 |
-| size            | 开关的尺寸，可选值包括 large、medium、small  | string  | medium   | 1.0.0 |
-| checked         | 当前选中状态，受控属性                       | boolean | false    | 1.0.0 |
-| default-checked | 初始选中状态，用于非受控模式                 | boolean | false    | 1.0.0 |
-| disabled        | 设置开关是否禁用                             | boolean | false    | 1.0.0 |
-| loading         | 设置开关加载状态                             | boolean | false    | 1.0.0 |
-| size            | 按钮的尺寸，可选值包括 large、medium、small  | string  | medium   | 1.0.0 |
-| name            | 开关的名称                                   | string  | -        | 1.0.0 |
-| onChange        | 值改变时触发                                 |         | -        | 1.0.0 |
+| bodyComponent | 对话框内容区域组件 | | | 1.0.0 |
+| bodyProps | 对话框内容区域组件属性 | Object | | 1.0.0 |
+| cancel | 底部取消按钮事件 | Function | | 1.0.0 |
+| confirm | 底部确认按钮事件 | Function | | 1.0.0 |
+| footerComponent | 对话框底部区域组件 | | | 1.0.0 |
+| footerProps | 对话框底部区域组件属性 | Object | | 1.0.0 |
+| headerComponent | 对话框头部区域组件 | | | 1.0.0 |
+| headerProps | 对话框头部区域组件属性 | Object | | 1.0.0 |
+| height | 高度 | String | '300px' | 1.0.0 |
+| label | 对话框标题 | String | | 1.0.0 |
+| resizeGrip | 右下角拖拽调整弹窗尺寸 | boolean | FALSE | 1.0.0 |
+| showCloseButton | 是否展示头部右上角关闭按钮，不展示时，无法通过esc关闭弹窗 | boolean | FALSE | 1.0.0 |
+| width | 宽度 | String | '416px' | 1.0.0 |
 
 
 ## 设计变量
 
 | 类别    | Token名称                                      | 说明                     | 默认值                                           |
 | ------- | ---------------------------------------------- | ------------------------ | ------------------------------------------------ |
-| border  | --kdds-c-switch-track-border-radius            | 底部轨道圆角             | 100px                                            |
-| border  | --kdds-c-switch-dot-border-radius              | 白色圆点圆角             | 100px                                            |
-| border  | --kdds-c-switch-on-track-border-width-active   | 开-激活状态轨道宽度      | var(--kdds-g-sizing-border-2,2px)                |
-| border  | --kdds-c-switch-off-track-border-width-active  | 关-激活状态轨道宽度      | var(--kdds-g-sizing-border-2,2px)                |
-| color   | --kdds-c-switch-dot-color                      | 圆点默认颜色             | var(--kdds-g-color-on-surface-inverse-1,#FFFFFF) |
-| color   | --kdds-c-switch-on-track-border-active         | 开-激活状态轨道边框颜色  | var(--kdds-g-color-accent-1,#5582F34D)           |
-| color   | --kdds-c-switch-off-track-border-active        | 关-激活状态轨道边框颜色  | var(--kdds-g-color-on-surface-1,#B2B2B24D)       |
-| color   | --kdds-c-switch-on-track-color                 | 开-轨道默认颜色          | var(--kdds-g-color-accent-1, #5582F3)            |
-| color   | --kdds-c-switch-on-track-color-hover           | 开-轨道悬停颜色          | var(--kdds- g-color-accent-2, #87A9FF)           |
-| color   | --kdds-c-switch-on-track-color-focus           | 开-轨道点击颜色          | var(--kdds-g-color-on-surface-1,#B2B2B2)         |
-| color   | --kdds-c-switch-on-track-color-disabled        | 开-轨道禁用颜色          | var(--kdds-g-color-accent-4, #B5CAFF)            |
-| color   | --kdds-c-switch-off-track-color                | 关-轨道默认颜色          | var(--kdds-g-color-on-surface-1,#B2B2B2)         |
-| color   | --kdds-c-switch-off-track-color-hover          | 关-轨道悬停颜色          | var(--kdds-g-color-on-surface-2, #999999)        |
-| color   | --kdds-c-switch-off-track-color-focus          | 关-轨道点击颜色          | var(--kdds-g-color-on-surface-1,#B2B2B2)         |
-| color   | --kdds-c-switch-off-track-color-disabled       | 关-轨道禁用颜色          | var(--kdds-g-color-border-disabled-1,#D9D9D9)    |
-| color   | --kdds-c-switch-on-loading-icon-color          | 开-加载动画图标颜色      | var(--kdds-g-color-accent-1, #5582F3)            |
-| color   | --kdds-c-switch-off-loading-icon-color         | 关-加载动画图标颜色      | var(--kdds-g-color-on-surface-1,#B2B2B2)         |
-| sizing  | --kdds-c-switch-track-sizing-width-small       | 小尺寸轨道宽度           | 2rem                                             |
-| sizing  | --kdds-c-switch-track-sizing-height-small      | 小尺寸轨道高度           | 1rem                                             |
-| sizing  | --kdds-c-switch-track-sizing-width-medium      | 中尺寸轨道宽度           | 2.5rem                                           |
-| sizing  | --kdds-c-switch-track-sizing-height-medium     | 中尺寸轨道高度           | 1.25rem                                          |
-| sizing  | --kdds-c-switch-track-sizing-width-large       | 大尺寸轨道宽度           | 3rem                                             |
-| sizing  | --kdds-c-switch-track-sizing-height-large      | 大尺寸轨道高度           | 1.5rem                                           |
-| sizing  | --kdds-c-switch-dot-sizing-width-small         | 小尺寸圆点宽度           | 0.875rem                                         |
-| sizing  | --kdds-c-switch-dot-sizing-height-small        | 小尺寸圆点高度           | 0.875rem                                         |
-| sizing  | --kdds-c-switch-dot-sizing-width-medium        | 中尺寸圆点宽度           | 1.125rem                                         |
-| sizing  | --kdds-c-switch-dot-sizing-height-medium       | 中尺寸圆点高度           | 1.125rem                                         |
-| sizing  | --kdds-c-switch-dot-sizing-width-large         | 大尺寸圆点宽度           | 1.375rem                                         |
-| sizing  | --kdds-c-switch-dot-sizing-height-large        | 大尺寸圆点高度           | 1.375rem                                         |
-| sizing  | --kdds-c-switch-dot-sizing-width-small-focus   | 小尺寸点击状态圆点宽度   | 1.125rem                                         |
-| sizing  | --kdds-c-switch-dot-sizing-height-small-focus  | 小尺寸点击状态圆点高度   | 0.875rem                                         |
-| sizing  | --kdds-c-switch-dot-sizing-width-medium-focus  | 中尺寸点击状态圆点宽度   | 1.375rem                                         |
-| sizing  | --kdds-c-switch-dot-sizing-height-medium-focus | 中尺寸点击状态圆点高度   | 1.125rem                                         |
-| sizing  | --kdds-c-switch-dot-sizing-width-large-focus   | 大尺寸点击状态圆点宽度   | 1.625rem                                         |
-| sizing  | --kdds-c-switch-dot-sizing-height-large-focus  | 大尺寸点击状态圆点高度   | 1.375rem                                         |
-| spacing | --kdds-c-switch-dot-padding-right-small        | 小尺寸圆点右间距         | 0.0625rem                                        |
-| spacing | --kdds-c-switch-dot-padding-left-small         | 小尺寸圆点左间距         | 1.0625rem                                        |
-| spacing | --kdds-c-switch-dot-padding-right-medium       | 中尺寸圆点右间距         | 0.0625rem                                        |
-| spacing | --kdds-c-switch-dot-padding-left-medium        | 中尺寸圆点左间距         | 1.3125rem                                        |
-| spacing | --kdds-c-switch-dot-padding-right-large        | 大尺寸圆点右间距         | 0.0625rem                                        |
-| spacing | --kdds-c-switch-dot-padding-left-large         | 大尺寸圆点左间距         | 1.5625rem                                        |
-| spacing | --kdds-c-switch-dot-padding-right-small-focus  | 小尺寸点击状态圆点右间距 | 0.0625rem                                        |
-| spacing | --kdds-c-switch-dot-padding-left-small-focus   | 小尺寸点击状态圆点左间距 | 0.8125rem                                        |
-| spacing | --kdds-c-switch-dot-padding-right-medium-focus | 中尺寸点击状态圆点右间距 | 0.0625rem                                        |
-| spacing | --kdds-c-switch-dot-padding-left-medium-focus  | 中尺寸点击状态圆点左间距 | 1.0625rem                                        |
-| spacing | --kdds-c-switch-dot-padding-right-large-focus  | 大尺寸点击状态圆点右间距 | 0.0625rem                                        |
-| spacing | --kdds-c-switch-dot-padding-left-large-focus   | 大尺寸点击状态圆点左间距 | 1.3125rem                                        |
+| color | --kdds-c-modal-background | 弹出窗背景色 | var(--kdds-g-color-surface-1,#FFFFFF) |
+| shadow | --kdds-c-modal-shadow-top | 弹出窗阴影 | var(--kdds-g-shadow-4,#000000，0.1) |
+| color | --kdds-c-modal-header-background | 标题区背景色 | transparent |
+| color | --kdds-c-modal-footer-background | 操作区背景色 | transparent |
+| color | --kdds-c-modal-border | 弹出窗中标题区和操作区分割线颜色 | var(--kdds-g-color-border-2,#D9D9D9) |
+| color | --kdds-c-modal-icon-color | 图标默认颜色 | var(--kdds-g-color-on-surface-3,#666666) |
+| color | --kdds-c-modal-icon-color-hover | 图标悬停颜色 | var(--kdds-g-color-accent-2,#87A9FF) |
+| color | --kdds-c-modal-icon-color-focus | 图标点击颜色 | var(--kdds-g-color-accent-3,#3761CA) |
+| color | --kdds-c-modal-mask-background | 蒙层颜色 | var(--kdds-g-opacity-black-30,rgba(0, 0, 0, 0.3)) |
+| color | --kdds-c-modal-title-color | 标题颜色 | var(--kdds-g-color-on-surface-4,#212121) |
+| typography | --kdds-c-modal-title-font-size | 标题字号 | var(--kdds-g-font-scale-4,1rem) |
+| typography | --kdds-c-modal-title-font-weight | 标题字重 | var(--kdds-g-font-weight-6,600) |
+| spacing | --kdds-c-modal-body-padding-horizontal | 内容区左右内边距 | var(--kdds-g-spacing-6,1rem) |
+| spacing | --kdds-c-modal-header-padding-top | 标题区上侧内边距 | calc(var(--kdds-g-spacing-5) + 1px,0.75rem+1px) |
+| spacing | --kdds-c-modal-header-padding-bottom | 标题区下侧内边距 | calc(var(--kdds-g-spacing-5) + 1px,0.75rem+1px) |
+| border | --kdds-c-modal-header-border-width | 标题区分割线宽度 | 1px |
+| border | --kdds-c-modal-footer-border-width | 操作区分割线宽度 | 1px |
+| sizing | --kdds-c-modal-footer-sizing-height | 操作区高度 | 3.125rem |
