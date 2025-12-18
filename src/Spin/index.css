@@ -1,0 +1,11 @@
+.spin-demo-container {
+  display: flex;
+  gap: 48px;
+  align-items: center;
+}
+
+.spin-demo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
