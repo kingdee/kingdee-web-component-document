@@ -8,9 +8,9 @@ const Status = (props: ComponentProps) => {
   return (
     <div style={{ display: 'flex', gap: '48px' }}>
       <kdcq-input {...props} label="Label" disabled placeholder="disabled" />
-      <kdcq-input {...props} label="Label" disabled />
+      <kdcq-input {...props} label="Label" disabled value="Disabled" />
       <kdcq-input {...props} label="Label" readonly placeholder="read-only" />
-      <kdcq-input {...props} label="Label" readonly />
+      <kdcq-input {...props} label="Label" readonly value="Read-only" />
     </div>
   );
 };
@@ -18,9 +18,9 @@ const Status = (props: ComponentProps) => {
 const Size = (props: ComponentProps) => {
   return (
     <div style={{ display: 'flex', gap: '48px' }}>
-      <kdcq-input {...props} label="Label" placeholder="Large" size="large" />
-      <kdcq-input {...props} label="Label" placeholder="medium" />
       <kdcq-input {...props} label="Label" placeholder="small" size="small" />
+      <kdcq-input {...props} label="Label" placeholder="medium" />
+      <kdcq-input {...props} label="Label" placeholder="Large" size="large" />
     </div>
   );
 };
@@ -129,13 +129,13 @@ const Limit = (props: ComponentProps) => {
         placeholder="Minlength is 2"
         {...props}
         label="Label"
-        min-length={2}
+        min-length="10"
       />
       <kdcq-input
         placeholder="Maxlength is 10"
         {...props}
         label="Label"
-        max-length={10}
+        max-length="10"
       />
     </div>
   );
