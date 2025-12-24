@@ -32,6 +32,10 @@ export default class BasicDatatable extends KingdeeElement {
     <kd-datatable key-field='id' data={data} columns={columns}></kd-datatable>
 </template>`,
   },
+  {
+    language: 'css',
+    content: ''
+  }
 ];
 
 export default () => (
@@ -431,7 +435,8 @@ export default class BasicDatatable extends KingdeeElement {
   },
   {
     language: 'html',
-    content: ` <div class="kwc-common-container">
+    content: `<template>
+    <div class="kwc-common-container">
     <kd-switch checked={noDataSwitch} label="No Data" onclick={toggleNoDataSwitch}></kd-switch>
     <kd-switch checked={loadingSwitch} label="Loading" onclick={toggleLoadingSwitch}></kd-switch>
     <kd-switch checked={checkboxSwitch} label="Checkbox" onclick={toggleCheckBoxSwitch}></kd-switch>
@@ -444,7 +449,7 @@ export default class BasicDatatable extends KingdeeElement {
     loading={loadingSwitch}
     show-row-number-column={rowNumberSwitch}
     hide-checkbox-column={getCheckboxSwitched}
-  ></kd-datatable>`,
+  ></kd-datatable></template>`,
   },
   {
     language: 'css',

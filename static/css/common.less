@@ -57,12 +57,20 @@ code {
         flex-direction: column;
         .kwc-default-previewer-demo-action {
           border-top: 1px dashed var(--kwc-default-previewer-border-color);
-          padding: 4px 10px;
-          text-align: end;
+          padding: 0 8px;
+          height: 32px;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          gap: 8px;
           .demo-code-icon {
             color: var(--kwc-default-previewer-icon-color);
+          }
+          > * {
             cursor: pointer;
-            align-self: flex-end;
+            line-height: 0;
+            color: #666;
+            font-size: 16px;
             &.show {
               color: @theme-color;
             }

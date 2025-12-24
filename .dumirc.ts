@@ -30,4 +30,6 @@ export default defineConfig({
       type: 'image/x-icon',
     },
   ],
+  base: process.env.NODE_ENV === 'production' ? '/kwc/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/kwc/' : '/',
 });

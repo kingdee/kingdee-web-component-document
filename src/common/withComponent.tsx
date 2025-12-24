@@ -2,6 +2,7 @@ import { Icon, Tabs, Tooltip } from '@kdcloudjs/kdesign';
 import { useLocale, usePrefersColor } from 'dumi';
 import React, { type FC, useEffect, useState } from 'react';
 import CodeBlock from './codeBlock';
+import LiveDemo from './liveDemo';
 export interface Info {
   language: string;
   content: string;
@@ -50,6 +51,15 @@ export default function withComponent(Component: any): FC<ComponentProps> {
     const codeClassName = `kwc-default-previewer-demo-code ${
       showCode ? 'show' : 'hide'
     }`;
+
+    const tip = showCode
+      ? isEnglish
+        ? 'Hide code'
+        : '隐藏代码'
+      : isEnglish
+      ? 'Show code'
+      : '显示代码';
+
     return (
       <div className="kwc-default-previewer-demo-container">
         <div className="kwc-default-previewer-demo-preview">
@@ -62,34 +72,23 @@ export default function withComponent(Component: any): FC<ComponentProps> {
         </div>
         <div className="kwc-default-previewer-demo-code-wrap">
           <div className="kwc-default-previewer-demo-action">
-            {(() => {
-              const tip = showCode
-                ? isEnglish
-                  ? 'Hide code'
-                  : '隐藏代码'
-                : isEnglish
-                ? 'Show code'
-                : '显示代码';
-
-              return (
-                <Tooltip placement="top" tip={tip}>
-                  <Icon
-                    onClick={handleChange}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        handleChange();
-                      }
-                    }}
-                    className={`demo-code-icon ${showCode ? 'show' : 'hide'}`}
-                    type="code"
-                    tabIndex={0}
-                    role="button"
-                    aria-pressed={showCode}
-                  />
-                </Tooltip>
-              );
-            })()}
+            <LiveDemo isEnglish={isEnglish} codeInfo={codeInfo} />
+            <Tooltip placement="top" tip={tip}>
+              <Icon
+                onClick={handleChange}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleChange();
+                  }
+                }}
+                className={`demo-code-icon ${showCode ? 'show' : 'hide'}`}
+                type="code"
+                tabIndex={0}
+                role="button"
+                aria-pressed={showCode}
+              />
+            </Tooltip>
           </div>
           <div className={codeClassName}>
             <Tabs activeKey={curKey} onChange={showChange}>
