@@ -1,6 +1,5 @@
 import '@kdcloudjs/kdesign/dist/kdesign.css'
 import '@kdcloudjs/kwc-synthetic-shadow'
-import '../static/css/common.less'
 import '../static/kwc/index.css'
 import '../static/kwc/index.js'
 
