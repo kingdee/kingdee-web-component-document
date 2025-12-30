@@ -10,10 +10,12 @@ export default defineConfig({
       'zh-CN': [
         { title: '介绍', link: '/guide' },
         { title: '组件', link: '/components' },
+        { title: '最佳实践', link: '/bestPractices' },
       ],
       'en-US': [
         { title: 'Guide', link: '/en-US/guide' },
         { title: 'Components', link: '/en-US/components' },
+        { title: 'BestPractices', link: '/bestPractices' },
       ],
     },
   },

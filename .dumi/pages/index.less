@@ -1,0 +1,240 @@
+.customHomePageSection {
+  background-image: url('./images/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  overflow: hidden;
+
+  .leftBlock {
+    flex-grow: 1;
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-inline-start: 12%;
+    padding-inline-end: 40px;
+    @keyframes x-animation {
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    .title {
+      width: 332px;
+      height: 97px;
+      background-image: url('./images/KWC.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      margin-bottom: 36px;
+      transform: translateX(-40px);
+      opacity: 0.2;
+      animation: x-animation 3s
+        linear(
+          0,
+          0.0146,
+          0.0548,
+          0.1153,
+          0.1911,
+          0.2776,
+          0.3706,
+          0.4665,
+          0.562,
+          0.6545,
+          0.7419,
+          0.8225,
+          0.8951,
+          0.9589,
+          1.0137,
+          1.0591,
+          1.0956,
+          1.1235,
+          1.1434,
+          1.156,
+          1.1621,
+          1.1626,
+          1.1585,
+          1.1505,
+          1.1396,
+          1.1264,
+          1.1118,
+          1.0964,
+          1.0807,
+          1.0653,
+          1.0505,
+          1.0367,
+          1.0241,
+          1.0128,
+          1.003,
+          0.9946,
+          0.9878,
+          0.9824,
+          0.9784,
+          0.9757,
+          0.9741,
+          0.9734,
+          0.9737,
+          0.9746,
+          0.9761,
+          0.9781,
+          0.9803,
+          0.9828,
+          0.9853,
+          0.9878,
+          0.9903,
+          0.9927,
+          0.9949,
+          0.9968,
+          0.9986,
+          1.0001,
+          1.0013,
+          1.0024,
+          1.0032,
+          1.0037,
+          1.0041,
+          1.0043,
+          1.0043,
+          1.0042,
+          1.0041,
+          1.0038,
+          1.0034,
+          1.0031,
+          1.0026,
+          1.0022,
+          1.0018,
+          1.0014,
+          1.001,
+          1.0007,
+          1.0004,
+          1.0001,
+          0.9999,
+          0.9997,
+          0.9996,
+          0.9994,
+          0.9994,
+          0.9993,
+          0.9993,
+          0.9993,
+          0.9993,
+          0.9994,
+          0.9994,
+          0.9995,
+          0.9995,
+          0.9996,
+          0.9997,
+          0.9997,
+          0.9998,
+          0.9999,
+          0.9999,
+          1,
+          1,
+          1,
+          1.0001,
+          1.0001,
+          1
+        )
+        forwards;
+    }
+    .description_large {
+      font-size: 52px;
+      font-weight: 400;
+      line-height: 100%;
+      margin-bottom: 12px;
+    }
+    .description_small {
+      font-size: 16px;
+      color: #6d8ab3;
+      margin-bottom: 60px;
+      width: 80%;
+    }
+    .button-group {
+      display: flex;
+      gap: 20px;
+    }
+    .btn {
+      width: 156px;
+      height: 48px;
+      border-radius: 99px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.3s;
+
+      &-primary {
+        background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+        color: #ffffff;
+        border: none;
+      }
+      &-secondary {
+        background: #f5f2ff;
+        color: #2f3e61;
+        border: 2px solid #ffffff;
+      }
+      &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+        transition: opacity 0.3s;
+      }
+      > .icon {
+        width: 14px;
+        height: 14px;
+        margin-inline-end: 8px;
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+      > .rocketIcon {
+        background-image: url('./images/rocket.png');
+      }
+      > .elementIcon {
+        background-image: url('./images/element.png');
+      }
+    }
+  }
+  .rightBlock {
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    .mainImage {
+      background-image: url('./images/main.png');
+      background-size: 70%;
+      background-position: 35%;
+      background-repeat: no-repeat;
+      height: 100%;
+      width: 100%;
+      z-index: 10;
+    }
+    .paperContainer {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      .paper_one {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        background-color: #eaeefc;
+        left: 0;
+        bottom: 0;
+        border-radius: 10px;
+        opacity: 0.6;
+      }
+      .paper_two {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        background-color: #e8ebfc;
+        right: 0;
+        opacity: 0.6;
+        border-radius: 10px;
+      }
+    }
+  }
+}

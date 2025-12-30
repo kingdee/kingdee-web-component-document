@@ -1,0 +1,97 @@
+.bestPracticesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('./images/bestpractices_bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0 20px;
+  > .description {
+    padding-top: 72px;
+    text-align: center;
+    >.title {
+      font-size: 32px;
+      font-weight: 400;
+    }
+    .content {
+      font-size: 16px;
+      color: #4a5565;
+      margin-top: 8px;
+    }
+  }
+  .cardGroup {
+    flex: 1;
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+    padding-top: 40px;
+    .cardItem {
+      border-radius: 8px;
+      background-color: #ffffff;
+      padding: 24px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s;
+      align-self: start;
+      &:hover {
+        box-shadow: 0 6px 16px -8px #00000014, 0 9px 28px #0000000d,
+          0 12px 48px 16px #00000008;
+        .ctaButton {
+          background: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+          color: #ffffff;
+        }
+        >.title {
+          color: #3761ca;
+        }
+      }
+      .tagList {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        .tagItem {
+          height: 24px;
+          line-height: 24px;
+          padding: 0 8px;
+          background: #eff6ff;
+          color: #6e84b4;
+          border-radius: 24px;
+          font-size: 12px;
+        }
+      }
+      >.title {
+        font-size: 18px;
+        margin: 16px 0;
+        color: #101828;
+        transition: color 0.3s;
+      }
+      > .description {
+        font-size: 14px;
+        color: #4a5565;
+        margin-top: 16px;
+        word-break: break-all;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        line-height: 22px;
+        height: calc(22px * 3);
+      }
+      .ctaButton {
+        height: 38px;
+        border-radius: 38px;
+        line-height: 38px;
+        padding: 0 20px;
+        background: #e4ecff;
+        align-self: flex-start;
+        color: #3761ca;
+        cursor: pointer;
+        margin-top: 12px;
+        transition: all 0.5s ease;
+      }
+    }
+  }
+}

@@ -1,3 +1,4 @@
+@import './animate.min.css';
 @theme-color: #3863ff;
 
 html,
@@ -253,6 +254,26 @@ code {
           a {
             color: @theme-color;
           }
+        }
+      }
+      .dumi-default-content[data-no-sidebar='true'] {
+        margin: 0;
+        padding: 0;
+        > article {
+          flex-basis: calc(100vh - 64px);
+          .customHomePageSection {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+          }
+          .bestPracticesContainer {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+          }
+        }
+        >.dumi-default-footer {
+          margin-top: 0;
         }
       }
       .dumi-default-doc-layout-toc-wrapper {
