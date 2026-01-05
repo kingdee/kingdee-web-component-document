@@ -94,7 +94,7 @@ src/
 </template>
 ```
 
-在 todoWrapper.html 中添加该组件的的背景色等样式内容，todoWrapper.html 代码如下：
+在 todoWrapper.css 中添加该组件的的背景色等样式内容，todoWrapper.css 代码如下：
 
 ```css
 .wrapper {
@@ -190,8 +190,8 @@ src/
       type="text"
       class="input-field"
       placeholder="请输入待办事项"
-      value="{content}"
-      onchange="{handleInputChange}"
+      value={content}
+      onchange={handleInputChange}
     ></kd-input>
     <kd-button type="submit" class="submit-btn">添加</kd-button>
   </form>
@@ -264,7 +264,7 @@ export default class App extends KingdeeElement {
 
 ```html
 <template>
-  <div class="{containerClass}">
+  <div class={containerClass}>
     <p>{todo.content}</p>
   </div>
 </template>
@@ -310,9 +310,9 @@ export default class App extends KingdeeElement {
 <template>
   <div class="wrapper">
     <h1>待办事项</h1>
-    <mycontrol-create-form onaddtodo="{handleAddTodo}"></mycontrol-create-form>
-    <template for:each="{todos}" for:item="todo">
-      <mycontrol-todo key="{todo.id}" todo="{todo}"> </mycontrol-todo>
+    <mycontrol-create-form onaddtodo={handleAddTodo}></mycontrol-create-form>
+    <template for:each={todos} for:item="todo">
+      <mycontrol-todo key={todo.id} todo={todo}> </mycontrol-todo>
     </template>
   </div>
 </template>
@@ -330,12 +330,12 @@ export default class App extends KingdeeElement {
     {
       content: '打扫厕所',
       id: 1,
-      isCompleted: false,
+      isCompleted: false
     },
     {
       content: '写作业',
       id: 2,
-      isCompleted: true,
+      isCompleted: true
     },
   ];
 
@@ -348,7 +348,7 @@ export default class App extends KingdeeElement {
     const newTodo = {
       content: content,
       id: Date.now(), // 使用时间戳代替 Math.random() 避免 key 冲突
-      isCompleted: false,
+      isCompleted: false
     };
     this.todos = [...this.todos, newTodo];
   }
@@ -359,17 +359,15 @@ export default class App extends KingdeeElement {
 
 ```html
 <template>
-  <form class="create-form" onsubmit="{handleSubmit}">
+  <form class="create-form" onsubmit={handleSubmit}>
     <kd-input
       type="text"
       class="input-field"
       placeholder="请输入待办事项"
-      value="{content}"
-      onchange="{handleInputChange}"
+      value={content}
+      onchange={handleInputChange}
     ></kd-input>
-    <kd-button type="submit" class="submit-btn" onclick="{handleSubmit}"
-      >添加</kd-button
-    >
+    <kd-button type="submit" class="submit-btn" onclick={handleSubmit}>添加</kd-button>
   </form>
 </template>
 ```
@@ -412,13 +410,11 @@ export default class CreateForm extends KingdeeElement {
 
 ```html
 <template>
-  <div class="{containerClass}">
-    <p onclick="{handleToggleComplete}">{todo.content}</p>
+  <div class={containerClass}>
+    <p onclick={handleToggleComplete}>{todo.content}</p>
     <div class="actions">
       <span class="icon" title="Edit">✎</span>
-      <span class="icon delete-icon" onclick="{handleDelete}" title="Delete"
-        >🗑</span
-      >
+      <span class="icon delete-icon" onclick={handleDelete} title="Delete">🗑</span>
     </div>
   </div>
 </template>
@@ -479,14 +475,13 @@ export default class App extends KingdeeElement {
 <template>
   <div class="wrapper">
     <h1>待办事项</h1>
-    <mycontrol-create-form onaddtodo="{handleAddTodo}"></mycontrol-create-form>
-    <template for:each="{todos}" for:item="todo">
+    <mycontrol-create-form onaddtodo={handleAddTodo}></mycontrol-create-form>
+    <template for:each={todos} for:item="todo">
       <mycontrol-todo
-        key="{todo.id}"
-        todo="{todo}"
-        ondelete="{handleDelete}"
-        ontogglecomplete="{handleToggleComplete}"
-      >
+        key={todo.id}
+        todo={todo}
+        ondelete={handleDelete}
+        ontogglecomplete={handleToggleComplete}>
       </mycontrol-todo>
     </template>
   </div>
@@ -503,12 +498,12 @@ export default class App extends KingdeeElement {
     {
       content: '打扫厕所',
       id: 1,
-      isCompleted: false,
+      isCompleted: false
     },
     {
       content: '写作业',
       id: 2,
-      isCompleted: true,
+      isCompleted: true
     },
   ];
 
@@ -521,7 +516,7 @@ export default class App extends KingdeeElement {
     const newTodo = {
       content: content,
       id: Date.now(), // 使用时间戳代替 Math.random() 避免 key 冲突
-      isCompleted: false,
+      isCompleted: false
     };
     this.todos = [...this.todos, newTodo];
   }
@@ -560,13 +555,11 @@ editForm 组件与 createForm 组件都有输入框与按钮，可以参照 crea
     <kd-input
       type="text"
       placeholder="编辑待办事项"
-      value="{content}"
-      onchange="{handleInputChange}"
+      value={content}
+      onchange={handleInputChange}
       class="input-field"
     ></kd-input>
-    <kd-button type="submit" class="submit-btn" onclick="{handleSubmit}"
-      >完成</kd-button
-    >
+    <kd-button type="submit" class="submit-btn" onclick={handleSubmit}>完成</kd-button>
   </form>
 </template>
 ```
@@ -635,19 +628,17 @@ export default class EditForm extends KingdeeElement {
 
 ```html
 <template>
-  <template kwc:if="{todo.isEditing}">
-    <mycontrol-edit-form todo="{todo}" onsubmitedit="{handleEditSubmit}">
+  <template kwc:if={todo.isEditing}>
+    <mycontrol-edit-form todo={todo} onsubmitedit={handleEditSubmit}>
     </mycontrol-edit-form>
   </template>
 
   <template kwc:else>
-    <div class="{containerClass}">
-      <p onclick="{handleToggleComplete}">{todo.content}</p>
+    <div class={containerClass}>
+      <p onclick={handleToggleComplete}>{todo.content}</p>
       <div class="actions">
-        <span class="icon" onclick="{handleToggleEditing}" title="Edit">✎</span>
-        <span class="icon delete-icon" onclick="{handleDelete}" title="Delete"
-          >🗑</span
-        >
+        <span class="icon" onclick={handleToggleEditing} title="Edit">✎</span>
+        <span class="icon delete-icon" onclick={handleDelete} title="Delete">🗑</span>
       </div>
     </div>
   </template>
@@ -694,16 +685,15 @@ export default class App extends KingdeeElement {
 <template>
   <div class="wrapper">
     <h1>待办事项</h1>
-    <mycontrol-create-form onaddtodo="{handleAddTodo}"></mycontrol-create-form>
-    <template for:each="{todos}" for:item="todo">
+    <mycontrol-create-form onaddtodo={handleAddTodo}></mycontrol-create-form>
+    <template for:each={todos} for:item="todo">
       <mycontrol-todo
-        key="{todo.id}"
-        todo="{todo}"
-        ondelete="{handleDelete}"
-        ontogglecomplete="{handleToggleComplete}"
-        ontoggleediting="{handleToggleEditing}"
-        onedit="{handleEditTodo}"
-      >
+        key={todo.id}
+        todo={todo}
+        ondelete={handleDelete}
+        ontogglecomplete={handleToggleComplete}
+        ontoggleediting={handleToggleEditing}
+        onedit={handleEditTodo}>
       </mycontrol-todo>
     </template>
   </div>
@@ -723,13 +713,13 @@ export default class App extends KingdeeElement {
       content: '打扫厕所',
       id: 1,
       isCompleted: false,
-      isEditing: false,
+      isEditing: false
     },
     {
       content: '写作业',
       id: 2,
       isCompleted: true,
-      isEditing: false,
+      isEditing: false
     },
   ];
 
@@ -743,7 +733,7 @@ export default class App extends KingdeeElement {
       content: content,
       id: Date.now(), // 使用时间戳代替 Math.random() 避免 key 冲突
       isCompleted: false,
-      isEditing: false,
+      isEditing: false
     };
     this.todos = [...this.todos, newTodo];
   }
