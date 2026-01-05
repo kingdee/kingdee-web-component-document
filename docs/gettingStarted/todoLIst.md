@@ -407,8 +407,8 @@ export default class CreateForm extends KingdeeElement {
 
 当前虽然可以添加代办事项，但是还是无法对待办事项进行具体的操作，接下来我们将要解决代办事项的删除与完成状态的切换。
 
-在 todoWrapper.html 中，通过`onclick={handleToggleComplete}`给待办事项文本添加点击事件，这样后续可以通过点击文本将待办事项切换为“已完成”或“未完成”。
-在`actions`容器中添加“编辑”和“删除”按钮，我们先为“删除”按钮添加点击事件，todoWrapper.html 代码如下：
+在 todo.html 中，通过`onclick={handleToggleComplete}`给待办事项文本添加点击事件，这样后续可以通过点击文本将待办事项切换为“已完成”或“未完成”。
+在`actions`容器中添加“编辑”和“删除”按钮，我们先为“删除”按钮添加点击事件，todo.html 代码如下：
 
 ```html
 <template>
@@ -703,7 +703,7 @@ export default class App extends KingdeeElement {
         ontogglecomplete="{handleToggleComplete}"
         ontoggleediting="{handleToggleEditing}"
         onedit="{handleEditTodo}"
-        >>
+      >
       </mycontrol-todo>
     </template>
   </div>
