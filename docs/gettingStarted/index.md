@@ -22,7 +22,7 @@ title: 安装部署 # 组件的标题，会在菜单侧边栏展示
 
 ### Git 环境
 
-需要安装 git，可以到<a href="https://git-scm.com/" target="_blank">git 官网</a>下载安装，安装成功后，可在 VSCode 内置终端中输入`git -v`检查是否安装成功：正常查看到版本即完整成功。</br>
+需要安装 git，可以到<a href="https://git-scm.com/" target="_blank">git 官网</a>下载安装，安装成功后，可在 VSCode 内置终端中输入`git -v`检查是否安装成功：正常查看到版本即安装成功。</br>
 安装成功后，在文件资源管理器中进入我们刚刚所创建的 workspace 文件夹，右键后选择“Open Git Bash here”,指定在该目录下执行 git 命令。
 
 ![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-695c7cd903b6d634b332e99c)
@@ -30,7 +30,7 @@ title: 安装部署 # 组件的标题，会在菜单侧边栏展示
 ### Node.js 环境
 
 需要安装 Node.js（版本需 18.0 或更高）</br>
-到<a href="https://nodejs.org/zh-cn/download" target="_blank">node 官网</a>下载，或者使用 nvm 管理 node 版本，安装成功后，可在 VSCode 内置终端中输入`node -v`与`npm -v`检查是否安装成功：正常查看到版本即完整成功。</br>
+到<a href="https://nodejs.org/zh-cn/download" target="_blank">node 官网</a>下载，或者使用 nvm 管理 node 版本，安装成功后，可在 VSCode 内置终端中输入`node -v`与`npm -v`检查是否安装成功：正常查看到版本即安装成功。</br>
 ![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-695347454574214a3239b814)
 
 ### 包管理器
