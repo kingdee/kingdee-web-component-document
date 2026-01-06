@@ -48,7 +48,7 @@ title: 安装部署 # 组件的标题，会在菜单侧边栏展示
 **方式一**：使用 npm，在 VSCode 内置终端中输入`npm install -g @kdcloudjs/kd-custom-control-cli`；</br>
 **方式二**：使用 yarn，在 VSCode 内置终端中输入`yarn global add @kdcloudjs/kd-custom-control-cli`；</br>
 
-**验证安装**： 安装完成后，`kd-custom-control-cli -v` 输入验证是否成功：
+**验证安装**： 安装完成后，输入`kd-custom-control-cli -v` 验证是否成功：
 
 ![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-695348285776f60d2579cf1a)
 
