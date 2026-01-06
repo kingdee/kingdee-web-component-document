@@ -22,7 +22,10 @@ title: 安装部署 # 组件的标题，会在菜单侧边栏展示
 
 ### Git 环境
 
-需要安装 git，可以到<a href="https://git-scm.com/" target="_blank">git 官网</a>下载安装，安装成功后，可在 VSCode 内置终端中输入`git -v`检查是否安装成功：正常查看到版本即完整成功。
+需要安装 git，可以到<a href="https://git-scm.com/" target="_blank">git 官网</a>下载安装，安装成功后，可在 VSCode 内置终端中输入`git -v`检查是否安装成功：正常查看到版本即完整成功。</br>
+安装成功后，在文件资源管理器中进入我们刚刚所创建的 workspace 文件夹，右键后选择“Open Git Bash here”,指定在该目录下执行 git 命令。
+
+![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-695c7cd903b6d634b332e99c)
 
 ### Node.js 环境
 
