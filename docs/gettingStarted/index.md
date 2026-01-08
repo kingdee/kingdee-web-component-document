@@ -8,6 +8,19 @@ title: 安装部署 # 组件的标题，会在菜单侧边栏展示
 为了简化工程搭建流程，我们提供了配套的脚手架工具。你无需再为繁琐的 Webpack 配置、目录结构或依赖管理头疼，只需简单的几行命令，即可一键生成标准化的 KWC 项目模板，让你直接进入核心业务代码的开发。
 接下来，我们将介绍如何通过该工具快速安装环境并运行起你的第一个 KWC 项目。
 
+## 视频教程
+<iframe 
+    src="//player.bilibili.com/player.html?isOutside=true&aid=115853085382820&bvid=BV1xWiCBpE38&cid=35242442876&p=1"
+    width="800" 
+    height="450" 
+    scrolling="no" 
+    frameborder="no" 
+    framespacing="0" 
+    allowfullscreen="true">
+</iframe>
+
+---
+
 ## 环境准备
 
 ### 代码编辑器
@@ -39,7 +52,7 @@ title: 安装部署 # 组件的标题，会在菜单侧边栏展示
 **安装 yarn**：在 VSCode 内置终端中输入`npm install -g yarn`，安装后输入`yarn -v`检查是否安装成功；</br>
 ![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-695347708dbb0754443684aa)</br>
 
-**安装 pnpm**：在 VSCode 内置终端中输入 npm install pnpm -g，安装后输入 pnpm -v 检查是否安装成功；</br>
+**安装 pnpm**：在 VSCode 内置终端中输入`npm install pnpm -g`，安装后输入`pnpm -v`检查是否安装成功；</br>
 ![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-6953478429cd2a22227b25d2)
 
 ## 安装脚手架
@@ -48,9 +61,11 @@ title: 安装部署 # 组件的标题，会在菜单侧边栏展示
 **方式一**：使用 npm，在 VSCode 内置终端中输入`npm install -g @kdcloudjs/kd-custom-control-cli`；</br>
 **方式二**：使用 yarn，在 VSCode 内置终端中输入`yarn global add @kdcloudjs/kd-custom-control-cli`；</br>
 
-**验证安装**： 安装完成后，输入`kd-custom-control-cli -v` 验证是否成功：
+**验证安装**： 安装完成后，`kd-custom-control-cli -v` 输入验证是否成功：
 
 ![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-695348285776f60d2579cf1a)
+
+---
 
 ## 创建你的第一个项目
 
@@ -71,6 +86,8 @@ title: 安装部署 # 组件的标题，会在菜单侧边栏展示
 等待进度条跑完，当你看到 "自定义控件 mycontrol 创建成功" 的提示时，项目骨架已搭建完毕！ 这时候你可以看到左侧“资源管理器” workspace 下已经成功创建了 mycontrol 项目:
 
 ![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-695362aa5776f60d2579d0fe)
+
+---
 
 ## 启动与调试
 
@@ -93,6 +110,8 @@ npm start    # 或 yarn start
 复制启动日志中的链接 http://localhost:8000/ 打开任意浏览器后访问该链接。</br>
 如果你看到了带有 custom control template for KWC 的页面，说明你已经成功跑通了全流程！</br>  
 ![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-69536407df09ee077deb7f81)
+
+---
 
 ## 下一步做什么？
 
