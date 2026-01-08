@@ -8,6 +8,20 @@ title: 'Hello World 计数器'
 在本教程中，我们将通过编写一个经典的 Hello World 计数器，带你快速熟悉 KWC 的核心开发模式。你将学会如何使用 KWC 基础组件构件交互页面，如何处理用户点击事件，以及如何让数据驱动界面更新。</br>  
 ![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-695364f703b6d634b3327d18)
 
+## 视频教程
+
+<iframe 
+    src="//player.bilibili.com/player.html?isOutside=true&aid=115852900831535&bvid=BV1KNiyBsEhY&cid=35241330374&p=1" 
+    width="800" 
+    height="450" 
+    scrolling="no" 
+    frameborder="no" 
+    framespacing="0" 
+    allowfullscreen="true">
+</iframe>
+
+---
+
 ## 准备工作
 
 根据“快速入门-安装部署”中的步骤，目前在 KWC 项目目录（例如 mycontrol）下，已经有了 app.css，app.html，app.js 三个文件。
@@ -32,19 +46,11 @@ title: 'Hello World 计数器'
   <div class="page-container">
     <kd-card class="card-style">
       <div class="card-content">
-        <h1 class="title-text">Hello World</h1>
+        <h1>Hello World</h1>
         <div class="button-group">
-          <kd-button
-            variant="brand"
-            label={firstButtonLabel}
-            onclick={handleFirstClick}
-            class="custom-button">
+          <kd-button label="{firstButtonLabel}" onclick="{handleFirstClick}">
           </kd-button>
-          <kd-button
-            variant="brand"
-            label={secondButtonLabel}
-            onclick={handleSecondClick}
-            class="custom-button">
+          <kd-button label="{secondButtonLabel}" onclick="{handleSecondClick}">
           </kd-button>
         </div>
       </div>
@@ -57,6 +63,8 @@ title: 'Hello World 计数器'
 
 - 组件复用：使用了 KWC 内置的`<kd-card>`和`<kd-button>`的基础组件；
 - 数据绑定：通过 { } 语法如 `{firstButtonLabel}`，将 JS 中的数据连接到了 HTML 上；
+
+---
 
 ## 第二步：添加样式
 
@@ -79,7 +87,6 @@ title: 'Hello World 计数器'
   border-radius: 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 300px;
-  overflow: hidden;
 }
 /* 3. 卡片内部内容布局 */
 .card-content {
@@ -95,8 +102,6 @@ title: 'Hello World 计数器'
   display: flex;
   flex-direction: column;
   gap: 12px;
-  width: auto; /* 宽度自动，由内容撑开 */
-  margin: 0 auto; /* 确保自身居中 */
   align-items: center;
 }
 ```
@@ -106,12 +111,15 @@ title: 'Hello World 计数器'
 - Flex 布局：使用 Flexbox 轻松实现了卡片的居中和内部元素的对齐。
 - 细节调整：通过阴影（box-shadow）、圆角（border-radius）和间距（gap/padding），让界面看起来精致且有层次感。
 
+---
+
 ## 第三步：编写逻辑
 
 最后，我们需要定义组件的“大脑”。在 KWC 中，我们通过继承 KingdeeElement 类来为后续添加数据状态和业务逻辑方法打下基础。打开 app.js，输入以下代码并保存：
 
 ```javascript
 import { KingdeeElement, track } from '@kdcloudjs/kwc';
+
 export default class App extends KingdeeElement {
   // 定义追踪变量用于计数
   @track count1 = 0;
@@ -139,6 +147,8 @@ export default class App extends KingdeeElement {
 
 - 状态管理：我们定义了 count1 和 count2 两个变量，并用 @track 标记。这意味着：只要你修改它们的值，KWC 就会自动重新渲染页面；
 - 交互逻辑：编写了 handleClick 方法来响应用户的点击操作；
+
+---
 
 ## 运行与测试
 
