@@ -19,9 +19,9 @@ title: 'Todo List 待办事项'
 本教程将使用 KWC 实现一个交互式的代办事项清单，以下是功能点与效果预览：
 
 1. **添加任务**：输入文字按回车或点“添加”，列表即刻更新。
-2. **状态切换**：勾选任务后，文字自动出现删除线效果。
+2. **状态切换**：点击任务后，文字自动出现删除线效果。
 3. **编辑功能**：点击“编辑”按钮进入编辑模式，且输入框预填了原有内容。
-4. **删除任务**：点击删除，对应条目平滑移除。
+4. **删除任务**：点击删除按钮，移除对应事项。
 
 <!-- 这是一张图片，ocr 内容为：最终效果预览预览图 -->
 
@@ -44,7 +44,7 @@ title: 'Todo List 待办事项'
 
 ### 组件结构设计概览
 
-项目运行起来后，你会发现在 src 中有 app 这个文件夹，包含了 app.css，app.html，app.js 这三个文件，组成了本项目的根容器，负责拼装各个组件和页面的整体布局设计；
+项目安装部署后，你会发现在 src 中有 app 这个文件夹，包含了 app.css，app.html，app.js 这三个文件，组成了本项目的根容器，负责拼装各个组件和页面的整体布局设计；
 
 如果将本项目的所有代码都写在 app 中，这会让 app 组件变得非常庞大，难以维护与复用，这样也会失去使用 KWC 的意义，所以最好的方法是将不同功能封装成组件，最后再把他们结合起来。本教程会自定义以下四个组件来支撑待办事项的搭建：
 
@@ -63,13 +63,13 @@ title: 'Todo List 待办事项'
 - 不能包含两个连续的下划线
 - 不能包含连字符（-）
 
-**注意：每个组件需要直接保存在 src/modoules 下，不能在一个组件文件夹中嵌套另一个组件；**
+**注意：每个组件需要直接保存在 src/modoules 下，不能在一个组件文件夹中嵌套另一个组件文件；**
 
 ---
 
 ### 背景与标题
 
-新增自定义组件：在 app 目录下新建组件文件夹 todoWrapper，并在该文件夹下新建 todoWrapper.css，todoWrapper.html，todoWrapper.js 三个文件，最终文件结构目录如下：
+新增自定义组件：在 mycontrol 目录下新建组件文件夹 todoWrapper，并在该文件夹下新建 todoWrapper.css，todoWrapper.html，todoWrapper.js 三个文件，最终文件结构目录如下：
 
 ```bash
 src/
@@ -159,7 +159,7 @@ export default class App extends KingdeeElement {}
 
 ### 定义 createForm 组件
 
-新增 createForm 输入框组件：在 app 目录下新建组件文件夹 createForm，并在该文件夹下新建 createForm.css，createForm.html，createForm.js 三个文件，最终文件结构目录如下：
+新增 createForm 输入框组件：在 mycontrol 目录下新建组件文件夹 createForm，并在该文件夹下新建 createForm.css，createForm.html，createForm.js 三个文件，最终文件结构目录如下：
 
 ```bash
 src/
@@ -259,7 +259,7 @@ export default class App extends KingdeeElement {
 
 目前，我们已经可以在输入框中输入待办事项内容，接下来当用户点击加入按钮的时候我们要把他展示在下面，这里我们可以把下面的 Todo 都写成一个单独的组件，获取到输入的代办事项并展示出来。
 
-新增 todo 输入框组件：在 app 目录下新建组件文件夹 todo，并在该文件夹下新建 todo.css，todo.html，todo.js 三个文件。
+新增 todo 输入框组件：在 mycontrol 目录下新建组件文件夹 todo，并在该文件夹下新建 todo.css，todo.html，todo.js 三个文件。
 在 todo.html 中，通过`todo.content`可以获取并展示 content 中的内容，todo.html 代码如下：
 
 ```html
@@ -546,7 +546,7 @@ export default class App extends KingdeeElement {
 
 至此我们的代办事项已基本完成，不过还有最后还有一项编辑的功能需要完成，虽然可以把编辑的功能也写在 todo 组件中，但是由于他们的 UI 以及功能完全不一样，所以把编辑表单的功能写在独立的 editForm 组件中会是比较好的做法。
 
-新增 editForm 编辑组件：在 app 目录下新建组件文件夹 editForm，并在该文件夹下新建 editForm.css，editForm.html，editForm.js 三个文件。
+新增 editForm 编辑组件：在 mycontrol 目录下新建组件文件夹 editForm，并在该文件夹下新建 editForm.css，editForm.html，editForm.js 三个文件。
 editForm 组件与 createForm 组件都有输入框与按钮，可以参照 createForm.html 在 editForm.html 中引用基础组件 `kd-input` 和 `kd-button`，为用户提供一个编辑修改功能，editForm.html 代码如下：
 
 ```html
@@ -784,3 +784,4 @@ export default class App extends KingdeeElement {
 4. **删除任务**：点击删除，对应条目平滑移除。
 
 如果你想进一步提升开发技能，或者在实际项目中应对更复杂的场景，欢迎访问我们的 **[开发指南]** 模块~
+
