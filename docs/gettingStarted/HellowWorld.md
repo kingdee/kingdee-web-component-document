@@ -48,7 +48,7 @@ title: 'Hello World 计数器'
       <div class="card-content">
         <h1>Hello World</h1>
         <div class="button-group">
-          <kd-button label="{firstButtonLabel}" onclick="{handleFirstClick}">
+          <kd-button label={firstButtonLabel} onclick={handleFirstClick}>
           </kd-button>
           <kd-button label="{secondButtonLabel}" onclick="{handleSecondClick}">
           </kd-button>
