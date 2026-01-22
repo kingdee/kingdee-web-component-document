@@ -1,6 +1,7 @@
 ---
 toc: content # 导航在内容区才显示，在左侧导航栏不显示
 title: Hello World # 组件的标题，会在菜单侧边栏展示
+order: 1
 ---
 
 # Hello World
