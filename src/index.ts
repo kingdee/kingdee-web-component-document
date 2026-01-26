@@ -3,7 +3,6 @@ import '@kdcloudjs/kwc-synthetic-shadow'
 import '../static/kwc/index.css'
 import '../static/kwc/index.js'
 
-export { default as Button } from './Button'
 export { default as DataTable } from './DataTable'
 export { default as Input } from './Input'
 export { default as InputNumber } from './InputNumber'

@@ -4,237 +4,41 @@ title: Button 按钮 # 组件的标题，会在菜单侧边栏展示
 group:
   title: 基础
 ---
+
 # 按钮
 
 按钮是一种用于触发特定操作的组件。
 
 ## 基本用法
+
 按钮分为主要按钮、次要按钮、幽灵按钮和文本按钮四种。
+
 ```jsx
-import { Button } from 'kwc';
-
-const codeInfo = [
-  {
-    language: 'javascript',
-    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
-
-export default class ButtonBasic extends KingdeeElement {
-
-}`,
-  },
-  {
-    language: 'html',
-    content: `<template>
-      <kd-button label="Button" variant="primary"></kd-button>
-      <kd-button label="Button" variant="secondary"></kd-button>
-      <kd-button label="Button" variant="ghost"></kd-button>
-      <kd-button label="Button" variant="text"></kd-button>
-</template>
-    `,
-  },
-  {
-    language: 'css',
-    content: '',
-  },
-];
-
-export default () => <Button codeInfo={codeInfo} label="Button" type="1" />;
+import React from 'react';
+import SlButton from '@kdcloudjs/shoelace/dist/react/button'
+export default () => (
+  <div>
+    <SlButton>Button</SlButton>
+  </div>
+);
 ```
 
-## 图标按钮
-Button 可以嵌入图标
-```jsx
-import { Button } from 'kwc';
-
-const codeInfo = [
-  {
-    language: 'javascript',
-    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
-
-export default class ButtonBasic extends KingdeeElement {
-
-}`,
-  },
-  {
-    language: 'html',
-    content: `<template>
-      <kd-button icon-name="kdfont-zengjia3" class="icon-button" ></kd-button>
-      <kd-button label="Button" icon-name="kdfont-zengjia3" label='Button'></kd-button>
-</template>`,
-  },
-  {
-    language: 'css',
-    content: `.icon-button {
-     --kdds-c-button-prefixicon-margin-right: 0px,
-     --kdds-c-button-sizing-min-width-medium: auto
-     }`,
-  },
-];
-
-export default () => <Button codeInfo={codeInfo} type="2" />;
-```
-## 按钮形状
-Button 有多种形状，square - 长方形 (默认), circle - 圆形, round - 全圆角, 圆形按钮仅支持传入图标，传入文字不会渲染。
-```jsx
-import { Button } from 'kwc';
-
-const codeInfo = [
-  {
-    language: 'javascript',
-    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
-
-export default class ButtonBasic extends KingdeeElement {
-
-}`,
-  },
-  {
-    language: 'html',
-    content: `<template>
-        <kd-button icon-name="kdfont-zengjia3" shape='square' label="Button" ></kd-button>
-        <kd-button icon-name="kdfont-zengjia3" shape='circle' label="Button" ></kd-button>
-        <kd-button icon-name="kdfont-zengjia3" shape='round' label="Button" ></kd-button>
-</template>`,
-  },
-  {
-    language: 'css',
-    content: '',
-  },
-];
-
-export default () => <Button codeInfo={codeInfo} type="3" />;
-```
-
-## 按钮尺寸
-按钮分为：迷你、小、中、大，四种尺寸。高度分别为：24px/28px/32px/36px。推荐及默认为尺寸「中」。可在不同场景及不同业务需求选择适合尺寸。
-```jsx
-import { Button } from 'kwc';
-
-const codeInfo = [
-  {
-    language: 'javascript',
-    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
-
-export default class ButtonBasic extends KingdeeElement {
-
-}`,
-  },
-  {
-    language: 'html',
-    content: `<template>
-        <kd-button size='small' label="Button" ></kd-button>
-        <kd-button size='middle' label="Button" ></kd-button>
-        <kd-button size='large' label="Button" ></kd-button>
-</template>`,
-  },
-  {
-    language: 'css',
-    content: ``,
-  },
-];
-
-export default () => <Button codeInfo={codeInfo} type="4" />;
-```
-## 禁用按钮
-按钮的禁用状态。
-```jsx
-import { Button } from 'kwc';
-
-const codeInfo = [
-  {
-    language: 'javascript',
-    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
-
-export default class ButtonBasic extends KingdeeElement {
-    clickedButtonLabel;
-    handleClick(event) {
-        this.clickedButtonLabel = event.target.label;
-    }
-}`,
-  },
-  {
-    language: 'html',
-    content: `<kd-button disabled label="Button"></kd-button>`,
-  },
-  {
-    language: 'css',
-    content: ``,
-  },
-];
-
-export default () => <Button codeInfo={codeInfo} type="5" />;
-```
-## 加载中按钮
-按钮的加载中状态。
-```jsx
-import { Button } from 'kwc';
-
-const codeInfo = [
-  {
-    language: 'javascript',
-    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
-
-export default class ButtonBasic extends KingdeeElement {
-
-}`,
-  },
-  {
-    language: 'html',
-    content: `<kd-button loading label="Button"></kd-button>`,
-  },
-  {
-    language: 'css',
-    content: ``,
-  },
-];
-
-export default () => <Button codeInfo={codeInfo} type="6" />;
-```
-## 长按钮
-按钮宽度随着容器宽度进行适配。
-```jsx
-import { Button } from 'kwc';
-
-const codeInfo = [
-  {
-    language: 'javascript',
-    content: `import { KingdeeElement } from '@kdcloudjs/kwc';
-
-export default class ButtonBasic extends KingdeeElement {
-
-}`,
-  },
-  {
-    language: 'html',
-    content: `<div style={{ display: 'flex', gap: '10px',alignItems: 'center', width: '300px' }}>
-    <kd-button label="Button" stretch ></kd-button>
-</div>`,
-  },
-  {
-    language: 'css',
-    content: ``,
-  },
-];
-
-export default () => <Button codeInfo={codeInfo} type="7" />;
-```
-## API
-
-| 属性          | 说明                                                         | 类型    | 默认值  | 版本  |
-| ------------- | ------------------------------------------------------------ | ------- | ------- | ----- |
-| label         | 按钮内显示的文本内容。                                       |         | -       | 1.0.0 |
-| icon-name     | 按钮图标                                                     |         | -       | 1.0.0 |
-| icon-position | 图标位置，可选值包括left、right                              |         | left    | 1.0.0 |
-| disabled      | 设置按钮禁用状态                                             | boolean | false   | 1.0.0 |
-| loading       | 设置按钮加载状态                                             | boolean | false   | 1.0.0 |
-| stretch       | 开启该属性按钮将撑满父元素                                   | boolean | false   | 1.0.0 |
-| shape         | 按钮的形状，可选值包括square、round、circle                  |         | square  | 1.0.0 |
-| size          | 按钮的尺寸，可选值包括 large、medium、small                  |         | medium  | 1.0.0 |
-| variant       | 按钮的视觉样式变体，可选值包括primary、ghost、secondary和text |         | primary | 1.0.0 |
-| onclick       | 点击时触发                                                   |         | -       | 1.0.0 |
+| 属性          | 说明                                                             | 类型    | 默认值  | 版本  |
+| ------------- | ---------------------------------------------------------------- | ------- | ------- | ----- |
+| label         | 按钮内显示的文本内容。                                           |         | -       | 1.0.0 |
+| icon-name     | 按钮图标                                                         |         | -       | 1.0.0 |
+| icon-position | 图标位置，可选值包括 left、right                                 |         | left    | 1.0.0 |
+| disabled      | 设置按钮禁用状态                                                 | boolean | false   | 1.0.0 |
+| loading       | 设置按钮加载状态                                                 | boolean | false   | 1.0.0 |
+| stretch       | 开启该属性按钮将撑满父元素                                       | boolean | false   | 1.0.0 |
+| shape         | 按钮的形状，可选值包括 square、round、circle                     |         | square  | 1.0.0 |
+| size          | 按钮的尺寸，可选值包括 large、medium、small                      |         | medium  | 1.0.0 |
+| variant       | 按钮的视觉样式变体，可选值包括 primary、ghost、secondary 和 text |         | primary | 1.0.0 |
+| onclick       | 点击时触发                                                       |         | -       | 1.0.0 |
 
 ## 设计变量
 
-| 类别       | Token名称                                     | 说明                     | 默认值                                   |
+| 类别       | Token 名称                                    | 说明                     | 默认值                                   |
 | ---------- | --------------------------------------------- | ------------------------ | ---------------------------------------- |
 | color      | --kdds-c-button-primary-background            | 主要按钮背景颜色         | var(--kdds-g-color-accent-container-1)   |
 | color      | --kdds-c-button-primary-color                 | 主要按钮文字颜色         | var(--kdds-g-color-accent-5)             |

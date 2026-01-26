@@ -49,8 +49,10 @@
     "@kdcloudjs/kwc-i18n": "^0.0.1",
     "@kdcloudjs/kwc-shared-utils": "^0.0.3",
     "@kdcloudjs/kwc-synthetic-shadow": "^1.0.0",
+    "@kdcloudjs/shoelace": "^0.0.2",
     "@stackblitz/sdk": "^1.11.0",
     "animejs": "^4.2.2",
+    "react-live": "^4.1.8",
     "react-syntax-highlighter": "^16.1.0",
     "rxjs": "^7.8.2"
   },
