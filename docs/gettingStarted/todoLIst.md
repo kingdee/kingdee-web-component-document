@@ -6,7 +6,7 @@ order: 2
 
 # 综合实践
 
-本章节将引导你构建一个功能完整的待办事项清单（Todo List）。通过这个综合案例，你将掌握如何组合多个KWC组件，并实现它们之间的数据通信。</br>
+本章节将引导你构建一个功能完整的待办事项清单（Todo List）。通过这个综合案例，你将掌握如何组合多个 KWC 组件，并实现它们之间的数据通信。</br>
 
 <!-- 这是一张图片，ocr 内容为：最终效果预览预览图 -->
 
@@ -26,15 +26,15 @@ order: 2
 而针对待办事项这一类复杂应用，需要通过配置多个组件来实现，这样更便于组件的维护和管理：
 
 - **组件组合与封装**：通过对 KWC 的基础组件（`kd-input`, `kd-button`）进行二次封装，构建出 `CreateForm` 等自定义业务组件；
-- **组件间通信**：通过创建父组件，采用 _Property属性_ 向下传递数据，子组件通过 _Events事件_ 向上发送指令，实现复杂的组件应用。
+- **组件间通信**：通过创建父组件，采用 _Property 属性_ 向下传递数据，子组件通过 _Events 事件_ 向上发送指令，实现复杂的组件应用。
 
 你需要完成以下几步来实现待办事项的功能：
 
 1. 创建待办事项功能所需的组件文件夹及对应文件；
 2. 为组件创建标题“待办事项”和背景颜色；
-3. 使待办事项组件实现新增todo任务的功能；
-4. 新增并展示todo任务项次及列表；
-5. 为新增的todo任务添加交互功能。
+3. 使待办事项组件实现新增 todo 任务的功能；
+4. 新增并展示 todo 任务项次及列表；
+5. 为新增的 todo 任务添加交互功能。
 
 ---
 
@@ -49,7 +49,7 @@ order: 2
 | _**todo**_        | 展示组件 | 负责展示单条任务，提供操作入口（完成、编辑、删除）。         |
 | _**editForm**_    | 编辑组件 | 负责在编辑模式下修改任务内容。                               |
 
-:::注意
+:::info
 所有组件文件夹必须直接放在 _**src/modules/**_ 目录下，遵循小写字母开头、仅包含字母数字或下划线的命名规则，且不能相互嵌套。
 :::
 
@@ -117,7 +117,7 @@ src/
 3. 打开 _**todoWrapper.js**_ 文件，新增如下代码，预先继承`KingdeeElement` 基类，声明一个空的 Javascript 类，为后续添加数据状态和业务逻辑方法打下基础：
 
 ```javascript
-import { KingdeeElement } from "@kdcloudjs/kwc";
+import { KingdeeElement } from '@kdcloudjs/kwc';
 
 export default class App extends KingdeeElement {}
 ```
@@ -151,7 +151,7 @@ export default class App extends KingdeeElement {}
 6. 打开 _**app/app.js**_ 文件，替换如下代码以预先继承 `KingdeeElement` 基类:
 
 ```javascript
-import { KingdeeElement } from "@kdcloudjs/kwc";
+import { KingdeeElement } from '@kdcloudjs/kwc';
 
 export default class App extends KingdeeElement {}
 ```
@@ -165,15 +165,16 @@ export default class App extends KingdeeElement {}
 
 ---
 
-## 第三步：实现新增todo的功能
+## 第三步：实现新增 todo 的功能
 
-根据以下步骤，修改新增的表单组件 `createForm` 文件夹，为待办事项组件实现新增todo任务的功能：
+根据以下步骤，修改新增的表单组件 `createForm` 文件夹，为待办事项组件实现新增 todo 任务的功能：
 
-1. 在 VSCode 左侧选择资源管理器，打开 _**createForm**_ 文件夹，分别修改对应的html，css和js文件：
+1. 在 VSCode 左侧选择资源管理器，打开 _**createForm**_ 文件夹，分别修改对应的 html，css 和 js 文件：
 
 _**createForm.html**_:</br>
 通过将 KWC 的基础组件 `kd-input` 和 `kd-button` 组合在 `form` 容器中，为用户提供一个直观的任务录入界面。  
 因为输入框是需要显示内容的，因此我们还要通过`value={content}`将输入的资料内容传给输入框，同时监听输入变化， 通过执行函数将用户最新的输入存回变量，用来更改内容。
+
 ```html
 <template>
   <form class="create-form">
@@ -181,8 +182,8 @@ _**createForm.html**_:</br>
       type="text"
       class="input-field"
       placeholder="请输入待办事项"
-      value={content}
-      onchange={handleInputChange}
+      value="{content}"
+      onchange="{handleInputChange}"
     ></kd-input>
     <kd-button type="submit" class="submit-btn">添加</kd-button>
   </form>
@@ -191,6 +192,7 @@ _**createForm.html**_:</br>
 
 _**createForm.css**_:</br>
 对 `kd-input` 和 `kd-button` 的样式变量进行覆盖，去除了原生边框并统一了配色，使基础组件能够完美融入自定义的业务场景中。
+
 ```css
 .create-form {
   height: 40px;
@@ -215,11 +217,12 @@ _**createForm.css**_:</br>
 
 _**createForm.js**_:</br>
 继承`KingdeeElement` 基类，在这我们需要定义一个初始为空字符串的变量 content，用来存在用户在输入框中打出的每一个字，并通过`handleInputChange(event)`事件处理函数来捕获输入并更新。
+
 ```javascript
-import { KingdeeElement } from "@kdcloudjs/kwc";
+import { KingdeeElement } from '@kdcloudjs/kwc';
 
 export default class App extends KingdeeElement {
-  content = "";
+  content = '';
 
   handleInputChange(event) {
     this.content = event.target.value;
@@ -247,17 +250,18 @@ export default class App extends KingdeeElement {
 
 ---
 
-## 第四步：展示todo任务列表
+## 第四步：展示 todo 任务列表
 
-目前，我们已经可以在输入框中输入待办事项内容，接下来通过修改新增的展示组件 `todo` 文件，可以展示用户添加的待办事项todo的任务列表：
+目前，我们已经可以在输入框中输入待办事项内容，接下来通过修改新增的展示组件 `todo` 文件，可以展示用户添加的待办事项 todo 的任务列表：
 
-1. 在 VSCode 左侧选择资源管理器，打开 _**todo**_ 文件夹，分别修改对应的html，css和js文件：
+1. 在 VSCode 左侧选择资源管理器，打开 _**todo**_ 文件夹，分别修改对应的 html，css 和 js 文件：
 
 _**todo.html**_:</br>
 通过`todo.content`可以获取并展示 content 中的内容。
+
 ```html
 <template>
-  <div class={containerClass}>
+  <div class="{containerClass}">
     <p>{todo.content}</p>
   </div>
 </template>
@@ -281,14 +285,15 @@ _**todo.css**_:</br>
 
 _**todo.js**_:</br>
 通过 `@api todo` 从外部接收数据，并通过 `get containerClass()` 返回用于控制样式的“类名字符串”。
+
 ```javascript
-import { KingdeeElement, api } from "@kdcloudjs/kwc";
+import { KingdeeElement, api } from '@kdcloudjs/kwc';
 
 export default class App extends KingdeeElement {
   @api todo;
 
   get containerClass() {
-    return `todo ${this.todo.isCompleted ? "completed" : ""}`;
+    return `todo ${this.todo.isCompleted ? 'completed' : ''}`;
   }
 }
 ```
@@ -297,13 +302,14 @@ export default class App extends KingdeeElement {
 
 _**todoWrapper.html**_:</br>
 利用 `for:each` 循环 `todos` 数组动态渲染`mycontrol-todo` 子组件（`key` 属性确保数据变动时高效增量更新）；给 `mycontrol-create-form` 绑定 `onaddtodo={handleAddTodo}` 事件，实现子父组件数据更新与分发。
+
 ```html
 <template>
   <div class="wrapper">
     <h1>待办事项</h1>
-    <mycontrol-create-form onaddtodo={handleAddTodo}></mycontrol-create-form>
-    <template for:each={todos} for:item="todo">
-      <mycontrol-todo key={todo.id} todo={todo}> </mycontrol-todo>
+    <mycontrol-create-form onaddtodo="{handleAddTodo}"></mycontrol-create-form>
+    <template for:each="{todos}" for:item="todo">
+      <mycontrol-todo key="{todo.id}" todo="{todo}"> </mycontrol-todo>
     </template>
   </div>
 </template>
@@ -311,18 +317,19 @@ _**todoWrapper.html**_:</br>
 
 _**todoWrapper.js**_:</br>
 先用 `@track` 定义响应式数组作为初始数据源，确保视图随数据实时刷新；`handleAddTodo` 函数通过 `event.detail` 接收子组件的新任务文字，为其生成时间戳唯一 ID，最后用展开运算符创建新数组副本并赋值给 `this.todos`。
+
 ```javascript
-import { KingdeeElement, track } from "@kdcloudjs/kwc";
+import { KingdeeElement, track } from '@kdcloudjs/kwc';
 
 export default class App extends KingdeeElement {
   @track todos = [
     {
-      content: "打扫厕所",
+      content: '打扫厕所',
       id: 1,
       isCompleted: false,
     },
     {
-      content: "写作业",
+      content: '写作业',
       id: 2,
       isCompleted: true,
     },
@@ -350,26 +357,29 @@ _**createForm.html**_:
 
 ```html
 <template>
-  <form class="create-form" onsubmit={handleSubmit}>
+  <form class="create-form" onsubmit="{handleSubmit}">
     <kd-input
       type="text"
       class="input-field"
       placeholder="请输入待办事项"
-      value={content}
-      onchange={handleInputChange}
+      value="{content}"
+      onchange="{handleInputChange}"
     ></kd-input>
-    <kd-button type="submit" class="submit-btn" onclick={handleSubmit}>添加</kd-button>
+    <kd-button type="submit" class="submit-btn" onclick="{handleSubmit}"
+      >添加</kd-button
+    >
   </form>
 </template>
 ```
 
 _**createForm.js**_:</br>
 封装并派发任务指令，通过`event.preventDefault()`阻止表单默认刷新行为， 将用户输入的内容作为“包裹”派发给父组件，随后清空输入框以备下次录入。
+
 ```javascript
-import { KingdeeElement } from "@kdcloudjs/kwc";
+import { KingdeeElement } from '@kdcloudjs/kwc';
 
 export default class CreateForm extends KingdeeElement {
-  content = "";
+  content = '';
 
   handleInputChange(event) {
     this.content = event.target.value;
@@ -378,8 +388,8 @@ export default class CreateForm extends KingdeeElement {
   handleSubmit(event) {
     event.preventDefault();
     // 向上派发事件，将输入的内容传给父组件
-    this.dispatchEvent(new CustomEvent("addtodo", { detail: this.content }));
-    this.content = ""; // 清空输入框
+    this.dispatchEvent(new CustomEvent('addtodo', { detail: this.content }));
+    this.content = ''; // 清空输入框
   }
 }
 ```
@@ -393,26 +403,29 @@ export default class CreateForm extends KingdeeElement {
 
 ---
 
-## 第五步：为todo任务添加交互功能
+## 第五步：为 todo 任务添加交互功能
 
-根据上述步骤完成了为待办事项添加todo任务和展示的功能，接下来我们将要解决待办事项的删除、编辑与完成状态的切换。
+根据上述步骤完成了为待办事项添加 todo 任务和展示的功能，接下来我们将要解决待办事项的删除、编辑与完成状态的切换。
 
-根据以下步骤，修改展示组件 `todo` 文件夹，为todo任务列表添加对应的交互功能。
+根据以下步骤，修改展示组件 `todo` 文件夹，为 todo 任务列表添加对应的交互功能。
 
-### 为todo任务添加删除按钮
+### 为 todo 任务添加删除按钮
 
-1. 在 VSCode 左侧选择资源管理器，打开 _**todo**_ 文件夹，分别修改对应的html，css和js文件：
+1. 在 VSCode 左侧选择资源管理器，打开 _**todo**_ 文件夹，分别修改对应的 html，css 和 js 文件：
 
 _**todo.html**_:</br>
 通过`onclick={handleToggleComplete}`给待办事项文本添加点击事件，这样后续可以通过点击文本将待办事项切换为“已完成”或“未完成”。
 在`actions`容器中添加“编辑”和“删除”按钮，我们先为“删除”按钮添加点击事件。
+
 ```html
 <template>
-  <div class={containerClass}>
-    <p onclick={handleToggleComplete}>{todo.content}</p>
+  <div class="{containerClass}">
+    <p onclick="{handleToggleComplete}">{todo.content}</p>
     <div class="actions">
       <span class="icon" title="Edit">✎</span>
-      <span class="icon delete-icon" onclick={handleDelete} title="Delete">🗑</span>
+      <span class="icon delete-icon" onclick="{handleDelete}" title="Delete"
+        >🗑</span
+      >
     </div>
   </div>
 </template>
@@ -420,6 +433,7 @@ _**todo.html**_:</br>
 
 _**todo.css**_:</br>
 渲染已完成状态的事项样式、“编辑”与“删除”按钮的样式。
+
 ```css
 .todo {
   background-color: #3b36cc;
@@ -434,7 +448,7 @@ _**todo.css**_:</br>
 }
 .completed {
   opacity: 0.4;
-  text-decoration: line-through 3px black; 
+  text-decoration: line-through 3px black;
   text-decoration-color: black;
   text-decoration-thickness: 3px;
 }
@@ -447,6 +461,7 @@ _**todo.css**_:</br>
 
 _**todo.js**_:</br>
 通过 `CustomEvent` 封装了切换状态（`togglecomplete`）和删除（`delete`）的指令，并将当前任务的 `id` 作为参数传递出去。
+
 ```javascript
 import { KingdeeElement, api } from '@kdcloudjs/kwc';
 
@@ -475,13 +490,14 @@ _**todoWrapper.html**_:
 <template>
   <div class="wrapper">
     <h1>待办事项</h1>
-    <mycontrol-create-form onaddtodo={handleAddTodo}></mycontrol-create-form>
-    <template for:each={todos} for:item="todo">
+    <mycontrol-create-form onaddtodo="{handleAddTodo}"></mycontrol-create-form>
+    <template for:each="{todos}" for:item="todo">
       <mycontrol-todo
-        key={todo.id}
-        todo={todo}
-        ondelete={handleDelete}
-        ontogglecomplete={handleToggleComplete}>
+        key="{todo.id}"
+        todo="{todo}"
+        ondelete="{handleDelete}"
+        ontogglecomplete="{handleToggleComplete}"
+      >
       </mycontrol-todo>
     </template>
   </div>
@@ -490,6 +506,7 @@ _**todoWrapper.html**_:
 
 _**todoWrapper.js**_:</br>
 通过 `filter` 方法过滤掉指定 ID 的任务来实现删除功能，并利用 `map` 方法配合展开运算符精确修改特定任务的完成状态，通过对 `this.todos` 进行重新赋值。
+
 ```javascript
 import { KingdeeElement, track } from '@kdcloudjs/kwc';
 
@@ -498,12 +515,12 @@ export default class App extends KingdeeElement {
     {
       content: '打扫厕所',
       id: 1,
-      isCompleted: false
+      isCompleted: false,
     },
     {
       content: '写作业',
       id: 2,
-      isCompleted: true
+      isCompleted: true,
     },
   ];
 
@@ -516,7 +533,7 @@ export default class App extends KingdeeElement {
     const newTodo = {
       content: content,
       id: Date.now(), // 使用时间戳代替 Math.random() 避免 key 冲突
-      isCompleted: false
+      isCompleted: false,
     };
     this.todos = [...this.todos, newTodo];
   }
@@ -541,13 +558,12 @@ export default class App extends KingdeeElement {
 
 ![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-695a317dc5602355134dccc9)
 
-
-### 为todo任务添加编辑功能
+### 为 todo 任务添加编辑功能
 
 因编辑功能的 UI 和逻辑与 `todo` 组件差异较大，将编辑表单独立为 `editForm` 组件更合适。在 mycontrol 目录下新建 `editForm` 组件文件夹。
-根据以下步骤，修改新增的组件 `editForm` 文件夹，为todo任务添加编辑功能：
+根据以下步骤，修改新增的组件 `editForm` 文件夹，为 todo 任务添加编辑功能：
 
-1. 在 VSCode 左侧选择资源管理器，打开 _**editForm**_ 文件夹，分别修改对应的html，css和js文件：
+1. 在 VSCode 左侧选择资源管理器，打开 _**editForm**_ 文件夹，分别修改对应的 html，css 和 js 文件：
 
 _**editForm.html**_:
 
@@ -557,11 +573,13 @@ _**editForm.html**_:
     <kd-input
       type="text"
       placeholder="编辑待办事项"
-      value={content}
-      onchange={handleInputChange}
+      value="{content}"
+      onchange="{handleInputChange}"
       class="input-field"
     ></kd-input>
-    <kd-button type="submit" class="submit-btn" onclick={handleSubmit}>完成</kd-button>
+    <kd-button type="submit" class="submit-btn" onclick="{handleSubmit}"
+      >完成</kd-button
+    >
   </form>
 </template>
 ```
@@ -593,6 +611,7 @@ _**editForm.css**_:</br>
 
 _**editForm.js**_:</br>
 通过生命周期钩子 `connectedCallback` 在组件挂载时自动回显旧任务内容，确保用户能在原文字基础上修改。提交时，它将任务的 `id` 与修改后的 `content` 封装成对象一同派发给父组件，从而实现精准的数据更新。
+
 ```javascript
 import { KingdeeElement, api } from '@kdcloudjs/kwc';
 
@@ -628,19 +647,22 @@ export default class EditForm extends KingdeeElement {
 
 _**todo.html**_:</br>
 在 `todo` 组件中引入 `<mycontrol-edit-form>`，通过状态判断控制其显示（编辑态显示组件，否则显示待办内容）；给 “编辑” 按钮绑定 `onclick={handleToggleEditing}` 点击事件。
+
 ```html
 <template>
-  <template kwc:if={todo.isEditing}>
-    <mycontrol-edit-form todo={todo} onsubmitedit={handleEditSubmit}>
+  <template kwc:if="{todo.isEditing}">
+    <mycontrol-edit-form todo="{todo}" onsubmitedit="{handleEditSubmit}">
     </mycontrol-edit-form>
   </template>
 
   <template kwc:else>
-    <div class={containerClass}>
-      <p onclick={handleToggleComplete}>{todo.content}</p>
+    <div class="{containerClass}">
+      <p onclick="{handleToggleComplete}">{todo.content}</p>
       <div class="actions">
-        <span class="icon" onclick={handleToggleEditing} title="Edit">✎</span>
-        <span class="icon delete-icon" onclick={handleDelete} title="Delete">🗑</span>
+        <span class="icon" onclick="{handleToggleEditing}" title="Edit">✎</span>
+        <span class="icon delete-icon" onclick="{handleDelete}" title="Delete"
+          >🗑</span
+        >
       </div>
     </div>
   </template>
@@ -649,6 +671,7 @@ _**todo.html**_:</br>
 
 _**todo.js**_:</br>
 补充 `handleToggleEditing()` 与 `handleEditSubmit(event)` 用户捕捉用户动作并向上派发信号。
+
 ```javascript
 import { KingdeeElement, api } from '@kdcloudjs/kwc';
 
@@ -689,15 +712,16 @@ _**todoWrapper.html**_:</br>
 <template>
   <div class="wrapper">
     <h1>待办事项</h1>
-    <mycontrol-create-form onaddtodo={handleAddTodo}></mycontrol-create-form>
-    <template for:each={todos} for:item="todo">
+    <mycontrol-create-form onaddtodo="{handleAddTodo}"></mycontrol-create-form>
+    <template for:each="{todos}" for:item="todo">
       <mycontrol-todo
-        key={todo.id}
-        todo={todo}
-        ondelete={handleDelete}
-        ontogglecomplete={handleToggleComplete}
-        ontoggleediting={handleToggleEditing}
-        onedit={handleEditTodo}>
+        key="{todo.id}"
+        todo="{todo}"
+        ondelete="{handleDelete}"
+        ontogglecomplete="{handleToggleComplete}"
+        ontoggleediting="{handleToggleEditing}"
+        onedit="{handleEditTodo}"
+      >
       </mycontrol-todo>
     </template>
   </div>
@@ -706,6 +730,7 @@ _**todoWrapper.html**_:</br>
 
 _**todoWrapper.js**_:</br>
 补充编辑相关事件逻辑：`handleToggleEditing` 通过取反 `isEditing` 属性，实现任务在展示 / 编辑模式间切换；`handleEditTodo` 在保存修改时，通过对象解构获取新内容更新数组，并将 `isEditing` 设为 `false` 退出编辑状态；预制数据默认 `isEditing: false` ，保持任务为展示模式。
+
 ```javascript
 import { KingdeeElement, track } from '@kdcloudjs/kwc';
 
@@ -715,13 +740,13 @@ export default class App extends KingdeeElement {
       content: '打扫厕所',
       id: 1,
       isCompleted: false,
-      isEditing: false
+      isEditing: false,
     },
     {
       content: '写作业',
       id: 2,
       isCompleted: true,
-      isEditing: false
+      isEditing: false,
     },
   ];
 
@@ -735,7 +760,7 @@ export default class App extends KingdeeElement {
       content: content,
       id: Date.now(), // 使用时间戳代替 Math.random() 避免 key 冲突
       isCompleted: false,
-      isEditing: false
+      isEditing: false,
     };
     this.todos = [...this.todos, newTodo];
   }

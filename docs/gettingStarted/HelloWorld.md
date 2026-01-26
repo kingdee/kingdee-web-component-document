@@ -6,11 +6,11 @@ order: 1
 
 # Hello World
 
-本章节将通过一个计数器组件，带你快速上手 KWC 的交互式组件开发流程。</br>  
+本章节将通过一个计数器组件，带你快速上手 KWC 的交互式组件开发流程。</br>
 
 <!-- 这是一张图片，ocr 内容为：最终效果预览预览图 -->
-![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-695364f703b6d634b3327d18)
 
+![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-695364f703b6d634b3327d18)
 
 ## 视频教程
 
@@ -30,28 +30,29 @@ order: 1
 
 请确保你已完成 <a href="https://dev.kingdee.com/kwc/getting-started/" target="_blank"> 开发准备 </a> 中的所有步骤，并已成功启动 KWC 组件项目。
 
-### 认识KWC组件结构
+### 认识 KWC 组件结构
 
 一个标准的 KWC 组件通常由三个必需文件构成，它们共同定义了一个组件的完整形态，这些文件必须位于相同命名的组件文件夹内（例如 `mycontrol/app.html`）。</br>
-通过 KWC 配套脚手架生成的组件项目，会自动生成上述文件，这些文件存放于 *__src/modules/__* 目录下。
+通过 KWC 配套脚手架生成的组件项目，会自动生成上述文件，这些文件存放于 _**src/modules/**_ 目录下。
 
-| 文件 | 必需 | 说明 |
-| :--- | :--- | :--- |
-| *__app.html__* | 是 | 定义组件的 HTML 视图结构。 |
-| *__app.js__* | 是 | 定义组件的 JavaScript 逻辑与行为。 |
-| *__app.css__* | 否 | 定义组件的 CSS 样式。 |
+| 文件           | 必需 | 说明                               |
+| :------------- | :--- | :--------------------------------- |
+| _**app.html**_ | 是   | 定义组件的 HTML 视图结构。         |
+| _**app.js**_   | 是   | 定义组件的 JavaScript 逻辑与行为。 |
+| _**app.css**_  | 否   | 定义组件的 CSS 样式。              |
 
-:::注意
+:::info
 关于组件结构、命名空间和元数据文件的完整说明，请参阅《开发指南》中的 <a href="https://dev.kingdee.com/kwc/development-guide/define-component" target="_blank"> 创建组件 </a>。
 :::
 
 ---
 
-## 第一步：构建HTML视图
+## 第一步：构建 HTML 视图
 
 根据以下步骤完成 KWC 基础组件的 HTML 视图构建：
-1. 在 VSCode 左侧展开文件路径 *__workspace/mycontrol/src/modules/app__* 。
-2. 选择并打开 *__app.css__* 文件。
+
+1. 在 VSCode 左侧展开文件路径 _**workspace/mycontrol/src/modules/app**_ 。
+2. 选择并打开 _**app.css**_ 文件。
 3. 替换如下的代码内容：
    ```html
    <template>
@@ -62,7 +63,10 @@ order: 1
            <div class="button-group">
              <kd-button label="{firstButtonLabel}" onclick="{handleFirstClick}">
              </kd-button>
-             <kd-button label="{secondButtonLabel}" onclick="{handleSecondClick}">
+             <kd-button
+               label="{secondButtonLabel}"
+               onclick="{handleSecondClick}"
+             >
              </kd-button>
            </div>
          </div>
@@ -70,7 +74,7 @@ order: 1
      </div>
    </template>
    ```
-</br>
+   </br>
 
 ### 代码解析
 
@@ -80,9 +84,10 @@ order: 1
 
 ---
 
-## 第二步：添加CSS样式
+## 第二步：添加 CSS 样式
 
-接下来，我们为组件添加样式。打开 *__app.css__* 文件，替换其内容如下：
+接下来，我们为组件添加样式。打开 _**app.css**_ 文件，替换其内容如下：
+
 ```css
 /* 1. 页面整体布局  */
 .page-container {
@@ -126,9 +131,10 @@ order: 1
 
 ---
 
-## 第三步：编写JavaScript逻辑
+## 第三步：编写 JavaScript 逻辑
 
-最后，在 JavaScript 中定义组件的状态与行为。打开 *__app.js__* 文件，替换其内容如下：
+最后，在 JavaScript 中定义组件的状态与行为。打开 _**app.js**_ 文件，替换其内容如下：
+
 ```javascript
 import { KingdeeElement, track } from '@kdcloudjs/kwc';
 
@@ -157,17 +163,16 @@ export default class App extends KingdeeElement {
 
 ### 逻辑解析
 
-
 - **响应式状态**：使用 `@track` 装饰器声明 `count1` 和 `count2`。当其值改变时，KWC 就会自动重新渲染页面。
 - **计算属性**：通过 `getter` 函数 `firstButtonLabel` 动态生成按钮文本，将逻辑与视图分离。
 - **事件处理**：编写了 `handleFirstClick` 方法，通过简单的 `this.count1++` 来响应用户的点击操作。
 
 ---
 
-
 ## 第四步：运行测试
 
 保存所有文件，根据下面步骤运行你通过 KWC 开发的计数器组件：
+
 1. 使用快捷键（Ctrl + `）打开 VSCode 内置终端。
 2. 输入 `npm start` 启动 KWC 组件。
 3. 复制启动日志中的链接 http://localhost:8000/ 。
@@ -179,7 +184,6 @@ export default class App extends KingdeeElement {
 - 尝试点击第二个按钮，它的计数也独立变化。
 
 ![image.png](https://tc-cdn.processon.com/po/684fa7adbc9bf7627b3e562d-695368c39c0db14c9eaa7fc5)
-
 
 ---
 
