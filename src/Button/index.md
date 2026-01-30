@@ -15,7 +15,7 @@ group:
 
 ```jsx
 import React from 'react';
-import SlButton from '@kdcloudjs/shoelace/dist/react/button'
+import SlButton from '@kdcloudjs/shoelace/dist/react/button/index.js'
 export default () => (
   <div>
     <SlButton>Button</SlButton>
