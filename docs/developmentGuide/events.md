@@ -1,46 +1,47 @@
 ---
 toc: content
-title: '自定义事件（Events）'
-order: '8'
+title: '上行通信'
+order: '9'
+glossary: API | 事件 | Events | Web Components | DOM 树 | Shadow DOM
 ---
 
-自下而上通信的核心方式，子组件主动触发自定义事件并携带数据，父组件监听该事件并接收数据。
+# 上行通信
 
-KWC 会分发标准的 DOM 事件。组件还可以创建和分发自定义事件。使用事件可以向上层组件进行通信。例如，子组件 `c-todo-item` 会分发一个事件来通知其父组件 `c-todo-app` ，用户已选中该组件。
+上行通信是「KWC」框架中自下而上的数据传递方式，指子组件通过触发自定义事件向父组件传递数据。这种方式与下行通信配合，构成完整的父子组件间通信体系。<br>
 
-KWC 中的事件是基于 [DOM 事件](https://dom.spec.whatwg.org/#events)构建的，DOM 事件是每个浏览器中都可用的 API 和对象的集合。
+本章节将详细介绍「KWC」的自下而上通信方式。
 
-DOM 事件系统是一种包含这些元素的编程设计模式。
+## 实现逻辑
 
-- 事件名称，称为类型
-- 用于初始化事件的配置
-- 一个会发出事件的 JavaScript 对象
+在「KWC」中，事件基于 <a href="https://dom.spec.whatwg.org/#events" target="_blank"> DOM 事件 </a> 构建，后者是各浏览器均支持的 API。DOM 事件系统包含事件类型、初始化配置、触发事件的对象三个核心要素。
 
-实现逻辑：
+KWC 组件实现了 `EventTarget `接口，因此具备分发、监听和处理事件的能力。推荐使用 `CustomEvent` 接口创建事件，它在不同浏览器中表现一致，无需额外配置，并可通过 `detail` 属性传递任意数据。例如，子组件 `c-todo-item` 可分发事件，通知父组件 `c-todo-app` 用户已选中该项。
 
-1.  子组件通过 `new CustomEvent()` 创建自定义事件，可通过 `detail` 属性携带需要传递的业务数据；
-2.  子组件通过 `this.dispatchEvent()` 派发该自定义事件；
-3.  父组件在使用子组件时，通过 `addEventListener()` 监听该自定义事件，或直接在 HTML 标签上绑定 `onxxx` 事件，从事件对象中获取 `detail` 中的数据。
+1. 子组件使用 `new CustomEvent()` 创建事件，通过 `detail` 属性携带数据；
+2. 子组件调用 `this.dispatchEvent()` 派发事件；
+3. 父组件通过 `addEventListener()` 或模板中的 `onxxx` 属性监听事件，并从 `event.detail` 中获取数据。
 
-- 关键注意：自定义事件默认不会冒泡，若需跨层级传递，可在创建事件时配置 `bubbles: true` 和 `composed: true`。
+:::info
+自定义事件默认不会冒泡，若需跨层级传递，可在创建事件时配置 `bubbles: true` 和 `composed: true`。
+:::
 
-在 KWC 中，要创建事件，我们强烈建议使用 `CustomEvent` 接口， `CustomEvent` 可在各种浏览器上提供更一致的体验。它无需任何设置或样板代码，并且允许您通过 `detail` 属性传递任何类型的数据，因此非常灵活。KWC 实现了 `EventTarget` 接口，这使得它们能够分发事件、监听事件和处理事件。
+---
 
 ## 创建和分发事件
 
-在组件的 JavaScript 类中创建和分发事件。要创建事件，请使用 `CustomEvent()` 构造函数。要分发事件，请调用 `EventTarget.dispatchEvent()` 方法。
+在组件的 JavaScript 类中创建和分发事件，创建事件使用 `CustomEvent()` 构造函数，分发事件调用 `EventTarget.dispatchEvent()` 方法。
 
-`CustomEvent()` 构造函数有一个必需参数，即一个指示事件类型的字符串。作为组件作者，您需要在创建事件时指定事件类型。您可以使用任何字符串作为事件类型。但是，我们建议您遵循 DOM 事件标准。
+### 事件创建规范
 
-- 不使用大写字母
-- 没有空格
-- 用下划线分隔单词
+- `CustomEvent()` 构造函数的必需参数为指示事件类型的字符串，组件作者可自定义事件类型，但建议遵循 DOM 事件标准：
+  - 不使用大写字母、没有空格、用下划线分隔单词；
+- 不要在事件名称前加字符串 `on`，因内联事件处理程序名称必须以 `on` 开头，易造成名称重复（如事件名 `onmessage` 会导致绑定 `ononmessage`），引发混淆。
 
-不要在事件名称前加上字符串 `on` ，因为内联事件处理程序名称必须以字符串 `on` 开头。例如，如果你的事件名为 `onmessage` ，则标记应为 `<c-my-component ononmessage={handleMessage}>` 。注意重复出现的 `onon` ，这容易造成混淆。
+### 事件分发与监听
 
-以下是一个事件分发和处理的示例。
+在以下示例中，`c-paginator` 组件包含「上一页」和「下一页」按钮，用户点击时组件创建并触发 `previous` 和 `next` 事件，父组件监听并处理该事件以实现页码更新。
 
-`c-paginator` 组件包含 **“上一页”** 和 **“下一页”** 按钮。当用户点击这些按钮时，组件会创建并触发 `previous` 和 `next` 事件。您可以将 `paginator` 组件添加到任何需要 **“上一页”** 和 **“下一页”** 按钮的组件中。父组件会监听并处理这些事件。
+**步骤一**：子组件 `paginator` 分发事件
 
 ```html
 <!-- paginator.html -->
@@ -66,7 +67,7 @@ DOM 事件系统是一种包含这些元素的编程设计模式。
 </template>
 ```
 
-当用户点击按钮时， `previousHandler` 或 `nextHandler` 函数会执行。这些函数会创建并分发 `previous` 和 `next` 事件。
+当用户点击按钮时， `previousHandler` 或 `nextHandler` 函数会执行。这些函数会创建并分发 `previous` 和 `next` 事件，但分发的事件不携带额外数据，仅用于通知父组件用户的操作意向。
 
 ```js
 // paginator.js
@@ -83,11 +84,8 @@ export default class Paginator extends KingdeeElement {
 }
 ```
 
-这些事件只是简单的“发生了某事”事件。它们不会将数据有效负载传递到 DOM 树的上层，它们只是简单地表明用户点击了一个按钮。
-
-让我们把 `paginator` 放到一个名为 `c-event-simple` 的组件中，该组件监听并处理 `previous` 和 `next` 事件。
-
-要监听事件，请使用语法为 `oneventtype` HTML 属性。由于我们的事件类型是 `previous` 和 `next` ，因此监听器分别为 `onprevious` 和 `onnext` 。
+**步骤二**：父组件 (c-event-simple) 监听与处理
+把子组件 `paginator` 放在一个名为 `c-event-simple` 的父组件中，使用`oneventtype` 属性（本例中为 `onprevious` 和 `onnext`）来监听子组件的事件。
 
 ```html
 <!-- eventSimple.html -->
@@ -125,19 +123,24 @@ export default class EventSimple extends KingdeeElement {
 }
 ```
 
+---
+
 ## 在事件中传递数据
 
-在 KWC 组件通信中，事件传递数据的核心载体是 Web Component 原生的 `CustomEvent`（自定义事件），所有需要携带数据的组件事件，都通过该对象封装数据，再通过派发事件传递给监听方，以下是具体实现流程、示例及注意事项。
+「KWC」组件事件传递数据的核心载体是 Web Components 原生的 `CustomEvent`（自定义事件），所有需携带的数据均通过该对象封装，再通过派发事件传递给监听方。
 
-**核心原理**
+**核心原理**：
 
-1.  数据存储：将需要传递的数据存入 `CustomEvent` 的 `detail` 属性（这是 `CustomEvent` 专门用于携带自定义数据的字段，原生规范约定，无兼容性问题）；
-2.  事件派发：子组件通过 `this.dispatchEvent()` 派发封装好数据的自定义事件；
-3.  数据接收：父组件 / 监听方在事件回调中，通过 `event.detail` 提取传递的数据。
+1. 数据存储：将需要传递的数据存入 `CustomEvent` 的 `detail` 属性，该字段是 `CustomEvent` 专门用于携带自定义数据的原生规范字段，无兼容性问题；
+2. 事件派发：子组件通过 `this.dispatchEvent()` 派发封装好数据的自定义事件；
+3. 数据接收：父组件 / 监听方在事件回调中，通过 `event.detail` 提取传递的数据。
 
-注意：`detail` 是唯一推荐的事件传参字段，可携带任意类型数据（字符串、对象、数组等），避免通过事件名称、DOM 属性等间接传递，保证规范性和可维护性。
+:::info
+`detail` 是唯一推荐的事件传参字段，可携带任意类型数据（字符串、对象、数组等），避免通过事件名称、DOM 属性等间接传递，保证规范性和可维护性。
+:::
+注意：
 
-### **步骤一：子组件封装数据并派发自定义事件**
+### 步骤一：子组件封装数据并派发自定义事件
 
 ```js
 // 子组件：my-kwc-button.js
@@ -156,7 +159,7 @@ export default class MyKwcButton extends KingdeeElement {
     };
 
     // 2. 创建 CustomEvent，将数据存入 detail 属性
-    // 第一个参数：事件名称（自定义，建议带 kwc 前缀避免冲突）
+    // 第一个参数：事件名称（自定义，建议带「KWC」前缀避免冲突）
     // 第二个参数：配置项，detail 存储数据，bubbles/composed 控制事件冒泡（可选）
     const customEvent = new CustomEvent('kwc-btn-click', {
       detail: buttonData, // 核心：存放需要传递的数据
@@ -168,7 +171,7 @@ export default class MyKwcButton extends KingdeeElement {
 }
 ```
 
-### **步骤二：父组件 / 监听方接收事件数据**
+### 步骤二：父组件 / 监听方接收事件数据
 
 html 模板文件：
 
@@ -264,11 +267,16 @@ handleInputChange(e) {
     }
 ```
 
+---
+
 ## 事件处理
 
 ### 绑定单个事件监听器
 
-在父组件的模板（在本例中为 `c-parent` 的标记中声明监听器。
+在以下示例中，
+
+1. 首先，通过 `onnotification` 语法为父组件的模板 `c-parent` 声明监听器；
+2. 然后，在相应的 JavaScript 文件中定义处理函数 `handleNotification`。
 
 ```html
     <!-- parent.html -->
@@ -276,8 +284,6 @@ handleInputChange(e) {
       <c-parent onnotification={handleNotification}></c-child>
     </template>
 ```
-
-在 `c-parent` JavaScript 文件中定义处理函数，在本例中 `handleNotification` 。
 
 ```js
 // parent.js
@@ -291,7 +297,7 @@ export default class Parent extends KingdeeElement {
 
 ### 绑定多个事件监听器
 
-要以声明方式绑定多个事件监听器，请使用`kwc:on` 指令。此外，如果您想要添加事件类型动态计算的事件监听器（例如，通过 `@api` 从所有者组件传递的事件类型），也可以使用此指令。
+当需要以声明方式绑定多个事件监听器，请使用`kwc:on` 指令。此外，如果您想要添加事件类型动态计算的事件监听器（例如，通过 `@api` 从所有者组件传递的事件类型），也可以使用此指令。
 
 ```html
 <template>
@@ -320,11 +326,14 @@ export default class EventHandlerExample extends KingdeeElement {
 }
 ```
 
-使用 `kwc:on` 添加的事件处理程序绑定到组件实例；处理程序内部的 `this` 引用组件，从而可以访问其属性和方法。
+通过 `kwc:on` 添加的事件处理程序绑定到组件实例；处理程序内部的 `this` 引用组件，从而可以访问其属性和方法。
 
 ### 绑定动态事件监听器
 
-要在子组件上动态添加事件监听器，请在所有者组件的 JavaScript 文件中定义一个包含事件类型和处理程序的对象。然后，在所有者组件的模板中使用 `kwc:on` 指令将这些处理程序绑定到子组件。
+如果需要要在子组件上动态添加事件监听器：
+
+1. 首先，在所有者组件的 JavaScript 文件中定义一个包含事件类型和处理程序的对象；
+2. 然后，在所有者组件的模板中使用 `kwc:on` 指令将这些处理程序绑定到子组件。
 
 ```html
 <!-- eventDynamic -->
@@ -408,7 +417,7 @@ export default class EventDynamicChild extends KingdeeElement {
 
 ### 显式绑定事件监听器
 
-以上绑定事件监控器，都是声明式的，KWC 也支持显式（命令式）绑定事件监控器。
+以上绑定事件监控器，都是声明式的，「KWC」同时支持显式（命令式）绑定事件监控器，可在组件的 JavaScript 文件中通过 `addEventListener` 直接绑定，具体示例如下：
 
 在 `c-parent` JavaScript 中定义监听器函数和处理函数。
 
@@ -424,9 +433,7 @@ export default class Parent extends KingdeeElement {
 }
 ```
 
-如果同一个监听器被重复添加到同一个元素，浏览器会忽略重复项。
-
-如果事件监听器未被移除，您可以选择将 `handleNotification` 代码内联到 `addEventListener()` 调用中。
+如果同一个监听器被重复添加到同一个元素，浏览器会忽略重复项。如果事件监听器未被移除，您可以选择将 `handleNotification` 代码内联到 `addEventListener()` 调用中。
 
 ```js
 this.template.addEventListener('notification', (evt) => {
@@ -434,19 +441,21 @@ this.template.addEventListener('notification', (evt) => {
 });
 ```
 
-注意 不要使用 `addEventListener(eventName, this.handle.bind(this))`这样的形式，因为 `bind()`会返回一个新函数，组件无法使用同一个函数实例来调用 `removeEventListener`。会造成内存泄漏。
+:::info
+不要使用 `addEventListener(eventName, this.handle.bind(this))`这样的形式，因为 `bind()`会返回一个新函数，组件无法使用同一个函数实例来调用 `removeEventListener`。会造成内存泄漏。
+:::
 
 ### 添加事件监控器
 
-添加事件监听器有两种语法。一种是将事件监听器添加到组件 shadow 边界内的元素，另一种是将事件监听器添加到模板不拥有的元素，例如，传递给插槽的元素。
+显式绑定事件监听器时，需根据目标元素的归属场景选择对应的调用方式，主要分为两种场景，对应不同的语法：
 
-要向 shadow 边界内的元素添加事件监听器，请使用 `template` 。
+**第一种**： 将事件监听器添加到组件 shadow 边界内的元素：使用 `this.template.addEventListener()`；
 
 ```js
 this.template.addEventListener();
 ```
 
-要向模板不拥有的元素添加事件监听器，请直接调用 `addEventListener` 。
+**第二种**： 将事件监听器添加到模板不拥有的元素：使用 `this.addEventListener()`；
 
 ```js
 this.addEventListener();
@@ -454,9 +463,10 @@ this.addEventListener();
 
 ### 事件重定向
 
-当事件沿着 DOM 向上冒泡时，如果它跨越了 Shadow DOM 的边界， `Event.target` 的值会改变，以匹配监听器的作用域。这种改变称为“事件重定向”。事件重定向的目的是使监听器无法访问触发该事件的组件的 Shadow DOM。事件重定向保持了 Shadow DOM 的封装性。
+当事件沿 DOM 树向上冒泡时，若跨越了 Shadow DOM 的边界，`event.target` 的值会发生改变，以匹配当前监听器的作用域，这一行为被称为「事件重定向」。<br>
+事件重定向的核心目的是保证 Shadow DOM 的封装性，使外部监听器无法访问触发事件的组件内部 Shadow DOM。<br>
 
-我们来看一个简单的例子。
+在以下示例中，`<my-button>` 组件其内部已包含原生 button 元素，点击事件实际触发在 button 上，但 `<my-button>` 上的点击监听器获取的 `event.target` 始终是 `<my-button>`组件本身。
 
 ```html
 <!-- myButton.html -->
@@ -465,17 +475,16 @@ this.addEventListener();
 </template>
 ```
 
-即使点击发生在 `button` 元素上 `<my-button>` 上的点击监听器也总是接收 `my-button` 作为目标。
+再以 `c-todo-item` 和 `c-todo-app` 组件的嵌套关系为例：`c-todo-item` 组件内的 `div` 元素触发事件时，在其自身 Shadow DOM 中，`event.target` 为该 `div`；但对于外层 `c-todo-app` 组件上的监听器来说，`event.target` 会变为 `c-todo-item`，因为外部组件无法访问 `c-todo-item` 的 Shadow DOM。<br>
+值得注意的是，直接绑定在 `c-todo-item` 上的监听器，获取的 `event.target` 也是 `c-todo-item` 而非内部的 `div`，原因是该监听器位于`c-todo-item` 的 shadow 边界之外。
 
-假设 `c-todo-item` 组件中的一个 `div` 元素触发了一个事件。在组件的影子 DOM 中， `Event.target` 是 `div` 。但是对于包含 `c-todo-app` 组件的 `p` 元素上的监听器来说， `Event.target` 是 `c-todo-item` ，因为 `p` 元素无法访问 `c-todo-item` 影子 DOM。
-
-值得注意的是，对于 `c-todo-item` 上的监听器， `Event.target` 是 `c-todo-item` ，而不是 `div` ，因为 `c-todo-item` 位于 shadow 边界之外。
-
-> 注：要获取对触发事件的对象的引用，请使用 [`Event.target`](https://developer.mozilla.org/en-US/docs/Web/API/Event/target) 属性，它是 DOM API 中事件的一部分。
+:::info
+要获取对触发事件的对象的引用，请使用 [event.target 属性](https://developer.mozilla.org/en-US/docs/Web/API/Event/target)，它是 DOM API 中事件的一部分。
+:::
 
 ### 监听输入字段的变化
 
-要监听模板中接受输入的元素（例如文本字段（ `<input>` 或 `<kd-input>` ））的变化，请使用 `onchange` 事件。
+要监听模板中输入类元素（如原生 `<input>`、「KWC」的 `<kd-input>`）的数值变化，可直接为元素绑定 `onchange` 事件，在事件处理函数中通过 `evt.target.value` 获取输入字段的当前值，基础实现示例如下：
 
 ```html
 <!-- form.html -->
@@ -496,11 +505,9 @@ export default class Form extends KingdeeElement {
 }
 ```
 
-在这个例子中，每当输入值发生变化时，都会调用 JavaScript 文件中的 `handleChange()` 方法。
+上述示例中，输入值发生变化时会触发 `handleChange()` 方法，但组件的 `myValue` 属性不会随输入值自动更新，二者并非双向同步。<br>
 
-`myValue` 属性表示输入元素的值。此*属性*值不会在每次更改时自动更新。
-
-您可能需要对用户输入的值进行额外验证，以便在用户输入时自动纠错或限制某些值。为了使 `myValue` 与输入框的当前值保持同步，请在 `handleChange()` 方法中更新 `myValue` 。以下代码通过删除字符串开头和结尾的空格来自动纠错输入的值。使用 `evt.target.value` 获取输入字段的当前值。
+实际开发中，常需要对用户输入进行验证、自动纠错或限制，同时让组件内部属性与输入框实际值保持同步，此时只需在 `handleChange()` 方法中更新`myValue` 即可。以下示例通过删除字符串开头和结尾的空格来自动纠错输入的值，使用 `evt.target.value` 获取输入字段的当前值，保证属性值与输入框值一致：
 
 ```js
 // form.js
@@ -519,14 +526,14 @@ export default class Form extends KingdeeElement {
 }
 ```
 
-此示例展示了如何将输入值属性重置为第 `evt.target.value = trimmedValue` 行中的修剪值。它还展示了如何在组件将来重新加载（加载新值）时，保持 `myValue` 属性与规范化值同步。
+该示例中，既通过 `evt.target.value = trimmedValue` 重置了输入框的实际值，也通过 `this.myValue = trimmedValue` 更新了组件内部属性，确保组件重新加载时，`myValue` 能与输入框的规范化值保持同步。
 
-注意 _修改通过模板定义的元素的属性可能会对组件的其他部分产生意想不到的副作用。在我们的示例中，元素的输入值属性从模板中定义的值（由 `evt.target` 表示）发生了变化。该示例更改了模板中使用的值（\` `myValue` ），以保持组件元素的状态同步。否则，模板重新水合（template rehydration）在尝试将输入元素的状态与组件的状态进行匹配时，会检测到属性值不匹配。这种不匹配会生成运行时警告，您需要修改组件或 JavaScript 代码，以确保整个模板中的数据完整性。_
+:::info
+如果你修改了 DOM 元素（如输入框）的属性值，务必同步更新模板中绑定的组件属性。否则，当框架下次更新视图时，会发现绑定值与元素实际值不一致，可能导致意外行为。
+:::
 
 ### 移除事件监听器
 
-框架会在组件生命周期内负责管理和清理监听器。但是，如果您将监听器添加到其他对象（例如 `window` 对象、 `document` 对象等），则需要自行负责移除监听器。
+「KWC」框架会在组件的整个生命周期内，自动管理并清理组件内部的事件监听器，无需开发者手动操作。但如果将监听器添加到 `window`、`document` 等组件外部对象时，框架无法自动清理，需要开发者自行负责移除。
 
-要移除事件监听器，请使用 [`disconnectedCallback`](https://developer.salesforce.com/docs/platform/lwc/guide/create-lifecycle-hooks-dom.html) 生命周期钩子。
-
-如果你使用 `kwc:on` 添加事件监听器，你也可以通过在传递给 `kwc:on` 对象中省略该属性来删除事件监听器。
+移除这类外部监听器，需在组件的 <a href="https://dev.kingdee.com/kwc/development-guide/lifecycle" target="_blank"> `disconnectedCallback` 生命周期钩子 </a> 中执行移除操作；若通过 `kwc:on` 指令添加的监听器需要移除，可直接在传递给`kwc:on` 的事件处理对象中，省略对应事件类型的属性即可。

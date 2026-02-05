@@ -1,54 +1,52 @@
 ---
 toc: content
-title: '属性（Properties）'
-order: '7'
+title: '下行通信'
+order: '8'
+glossary: 属性 | Properties
 ---
 
-这是最基础的自上而下通信方式，在组件的 JavaScript 类中声明属性，在组件模板中引用它们以动态更新内容。父组件通过 HTML 标签属性传递数据，子组件接收并响应属性变化。
+# 下行通信
 
-组件开发在类中声明属性，通过 `@api`装饰器修饰的属性表明其公开的对象属性被外部使用。同时，KWC 会观测字段和属性值的变化。
+下行通信是「KWC」最基础的自上而下通信方式，指父组件通过属性（Properties/Attributes） 向子组件传递数据，子组件显式声明并接收属性，实现数据的响应式更新。
 
-属性（property）和特性（attribute）几乎相等。一般来说，在 HTML 中，称为特性，在 JavaScript 中称为属性。
+本章节将详细介绍「KWC」的自上而下通信方式。
 
-**核心要点：**
+## 核心特性
 
-- 属性声明：子组件需要显式声明可接收的属性
-- 类型校验：支持字符串、数字、对象、数组等类型
-- 响应式更新：父组件数据变化，子组件自动更新
-- 单向数据流：子组件不能直接修改 Props（原则）
+自上而下通信方式，严格遵循单向数据流原则：子组件仅可读取父组件传递的属性，不可直接修改，若需修改需通过上行通信通知父组件，由父组件统一更新数据后再向下传递。
 
-## 响应式
+- 显式声明：子组件需显式声明可接收的公共属性，明确组件对外接口；
+- 类型兼容：支持字符串、数字、对象、数组等所有 JavaScript 数据类型；
+- 深度响应：父组件数据变更时，子组件自动触发重新渲染，复杂类型可通过装饰器实现内部变更监听；
+- 名约定向：JavaScript 驼峰式属性自动映射 HTML 连字符式特性，符合 Web 标准；
+- 生命周期联动：属性变更触发组件 renderedCallback 生命周期，支持自定义渲染逻辑。
 
-响应式是 KWC 框架的核心系统。该框架会观察属性值的变化。当观察到变化时，会重新根据模板中使用的表达式来重新渲染组件，显示新值。
+## 使用公共属性（Public Properties）
 
-组件模板中的公共属性是响应式的。在组件的 JavaScript 类中，如果某个属性值发生变化，并且该字段在模板中或者是被其他 getter 依赖时，组件会重新渲染并显示新值。如果该属性是个对象或者数组，那么框架则会观察其内部的变化。
+子组件通过 `@api` 装饰器修饰的属性为公共属性，是对外暴露的标准接口，父组件可通过 HTML 特性或 DOM 语法直接赋值和访问。公共属性若在模板中使用，将自动具备响应式能力，属性值变更时组件会重新计算模板表达式并渲染。
 
-## 公共属性（Public Properties）
+:::info
+`@api` 是「KWC」从 `@kdcloudjs/kwc` 导出的装饰器，用于标记组件的公共属性，一个属性仅可使用一个装饰器（如不可同时使用 `@api` 和 `@track`）。
+:::
 
-使用 `@api`修饰的属性被视为公开的公共属性。在模板中使用公共属性时，该属性就有了响应性。
+以下示例，展示如何通过定义公共属性完成父组件向子组件传递数据。
 
-当组件被重新渲染时，模板中使用的表达式会被重新计算，并且 `renderedCallback()`这个生命周期会被执行。
+### 步骤一：定义子组件属性
 
-属性可以是你的自定义属性，也可以是从 `HTMLElement`中继承的属性。
-
-_提示：装饰器，如`@api`，`@track`是 JavaScript 的一个功能。一个属性声明只能有一个装饰器。_
-
-### 自定义属性
-
-从 `@kdcloudjs/kwc`中导入 `@api`装饰器。将 `itemName`设置为公开的公共属性。
+1. 在子组件的 JavaScript 类中，使用 `@api` 装饰器声明一个公共属性：
 
 ```js
-// todoItem.js
+// todoItem.js 子组件
 import { KingdeeElement, api } from '@kdcloudjs/kwc';
 export default class extends KingdeeElement {
-  @api itemName = 'Item';
+  @api itemName = 'Item'; // 声明一个公共字符串属性
 }
 ```
 
-`itemName`显示在模板中
+2. 将 `itemName` 显示在子组件的 HTML 模板中：
 
 ```html
-<!-- todoItem.html -->
+<!-- todoItem.html 子组件模板 -->
 <template>
   <div>
     <label>{itemName}</label>
@@ -56,23 +54,49 @@ export default class extends KingdeeElement {
 </template>
 ```
 
-### DOM 属性
+### 步骤二：父组件传递属性
 
-在标签中使用组件的 owner 组件可以通过 DOM 属性来访问组件的公共属性。DOM 属性是在类中声明的公共字段。它们可以通过 DOM 元素使用 `.`语法进行访问。
+在父组件的 HTML 模板中，通过属性绑定语法将数据传递给子组件:
 
-```js
-myItem = this.template.querySelector('x-todo-item').itemName;
+```html
+<!-- app.html 父组件模板 -->
+<template>
+  <!-- HTML 特性传递：连字符映射驼峰 -->
+  <todo-item item-name="Item"></todo-item>
+</template>
 ```
 
-## 私有属性（Private Properties）
+```javascript
+// app.js 父组件
+import { KingdeeElement } from '@kdcloudjs/kwc';
 
-### 原始类型和复杂类型的响应性
+export default class App extends KingdeeElement {
+  renderedCallback() {
+    // 获取子组件 DOM 实例
+    const myItem = this.template.querySelector('x-todo-item').itemName
+}
+```
 
-诸如布尔值，数值和字符串等原始类型的属性时响应式的。KWC 以浅层方式跟踪属性值的变化。当为属性赋值时，通过使用 `===`来检测变化。
+---
 
-而如数组或对象这些复杂类型时，必须创建一个新对象并将其分配给属性来检测更改。
+## 使用私有属性（Private Properties）
 
-```js
+私有属性是指组件内部使用的、不对外暴露的响应式状态。与使用 `@api` 装饰的公共属性不同，私有属性仅供组件内部使用，父组件无法直接访问或修改。<br>
+
+私有属性主要用于：
+
+- 存储组件内部状态和中间数据
+- 管理用户交互产生的临时状态
+- 缓存计算结果或派生数据
+
+### 默认响应式机制
+
+「KWC」对私有属性的默认响应式跟踪采用差异化策略，根据属性的类型执行不同的变化检测规则：<br>
+
+- 原始类型的属性（如字符串、数字、布尔值、null 和 undefined 等），「KWC」采用浅层方式跟踪其属性值的变化。为属性赋值时，使用 `===`来检测变化；
+- 复杂类型的属性（如对象、数组），「KWC」默认采用引用比较策略。只有为属性分配新的引用时，才会检测到变化。
+
+```javascript
 import { KingdeeElement } from '@kdcloudjs/kwc';
 
 export default class ReactivityExample extends KingdeeElement {
@@ -93,22 +117,11 @@ export default class ReactivityExample extends KingdeeElement {
 }
 ```
 
-如果要深入跟踪复杂对象内部发生的变化，建议使用 `@track`装饰器。
+### 深度响应式跟踪
 
-### 跟踪数组和对象的内部变化
+针对复杂类型（对象、数组），若需要跟踪其内部属性的变化（而非仅引用变化），需使用「KWC」提供的 `@track` 装饰器修饰私有属性。
 
-当属性使用 `@track`修饰时，KWC 会跟踪内部的变化：
-
-- 使用 `{}`创建的普通对象
-- 使用 `[]`创建的数组
-
-该框架以递归方式观察对对象和数组的修改，包括嵌套对象，嵌套数组以及对象和数组的混合。此外，它还能处理循环引用。
-
-但是框架不会观察复杂对象的变异操作，例如 `Date`等。
-
-### 观察对象的属性
-
-我们稍微修改下代码，声明一个 `fullName`属性：
+例如，如下已经声明的 `fullName`属性，如果未添加修饰，KWC 框架将无法响应该变化：
 
 ```js
 fullName = { firstName: '', lastName: '' };
@@ -117,13 +130,33 @@ fullName = { firstName: '', lastName: '' };
 this.fullName = { firstName: 'Bob', lastName: 'Doe' };
 ```
 
-但是我们如果通过修改对象的属性，那么 KWC 框架将无法响应该变化。
+我们需要使用 `@track` 装饰器来修饰 `fullName` 属性，修饰后直接修改对象内部属性即可触发组件渲染：
 
-要避免上述问题，我们需要使用 `@track`装饰器来修饰 `fullName`属性。
+```js
+import { track } from '@kdcloudjs/kwc';
 
-### 使用新属性重新渲染对象
+// 使用 @track 装饰器修饰对象属性
+@track fullName = { firstName: '', lastName: '' };
 
-不管该属性是否在 `@track`所修饰， 仅当上一个渲染周期中访问的属性被更新时，组件才会重新渲染。这样可以避免组件过度渲染。
+// 直接修改对象内部属性，框架可检测到变化并触发组件重新渲染
+this.fullName.firstName = 'Bob';
+this.fullName.lastName = 'Doe';
+```
+
+**`@track`装饰器的特性**
+
+- 支持跟踪普通对象（`{}` 创建）和数组（`[]` 创建）
+- 递归跟踪嵌套对象和数组的修改
+- 支持对象和数组的混合结构
+- 能处理循环引用
+- 不支持 `Date`、`Set`、`Map` 等复杂对象的内部变更检测，需要重新赋值
+
+### 智能渲染
+
+为了避免过度渲染，「KWC」拥有一种智能机制：只有当页面实际用到的属性发生变化时，才会触发重新渲染。
+框架会在渲染周期内记录哪些属性被访问过（Dependency Tracking）。
+
+在下面得得示例中，框架会记下 `obj.value1`被访问过。任何对 `obj`的修改，只要不涉及 `value1`的，都会被忽略，因为它并不会影响页面渲染的内容。只有当对 `value1`进行修改时才会触发重新渲染。另外，对 `obj`新增属性，或者更改其他属性，都不会触发渲染。
 
 ```js
 @track obj = { value1: 'hello' }
@@ -133,169 +166,20 @@ get words() {
 }
 ```
 
-在第一个渲染周期，框架会记下 `obj.value1`被访问过。任何对 `obj`的修改，只要不涉及 `value1`的，都会被忽略，因为它并不会影响页面渲染的内容。只有当对 `value1`进行修改时才会触发重新渲染。
+---
 
-另外，对 `obj`新增属性，或者更改其他属性，都不会触发渲染。
+## 使用 Getter 和 Setter
 
-### 观察数组的元素
+Getter 和 Setter 提供了对属性行为的增强控制能力，允许在属性读写时执行自定义逻辑。<br>
+要在公共属性被赋值时执行自定义逻辑，需要编写自定义的 setter。如果为公共属性编写了 setter，必须同时实现 getter 方法。
 
-`@track`的另一个用途是告诉框架观察数组元素的变化。如果不使用装饰器的话，框架仅会观察数组重新赋值时的变化，为数组添加新值和更新内部元素不会引起组件渲染。
+:::info
+可以使用 `@api` 修饰 getter 或 setter，但不能同时修饰两者。
+:::
 
-使用 `@track`修饰数组的话，数组会被转换为代理对象。
+### 数据格式转换
 
-### 观察复杂对象
-
-如 `Date`,`Set`等复杂对象的元素发生变更时，框架无法对其作为响应。如果需要确保复杂对象更新时，页面会重新渲染，那么我们需要给复杂对象重新赋值才行。
-
-## 属性名
-
-JavaScript 中属性名称采用驼峰式命名，而 HTML 属性名称则是采用连字符连接。
-
-例如，名为 `itemName`的 JavaScript 属性映射名为 `item-name`的 HTML 属性。
-
-### JavaScript 属性名称
-
-不要使用这些字符开头的属性名：
-
-- `on`
-- `aria`
-- `data`
-
-不要将这些保留字作为属性名：
-
-- `slot`
-- `part`
-- `is`
-
-### HTML 属性名称
-
-模板中的 HTML 属性不能包含大写字符，允许以小写字母，下划线和美元符号，连字符+字母来作为属性名称的开头。
-
-属性名称可以包含 `__`和 `_-`。
-
-如果连字符不是属性名称的第一个字符，则允许使用 `-_`作为开头。例如:
-
-- `_myattribute`
-- `$myattribute`
-- `my_-attribute`
-
-如果你有一个以大写字母开头的 JavaScript 属性，并且需要通过 HTML 属性进行设置，则必须使用特殊语法。属性名称的大写字符为小写，并以连字符 `-upper`为前缀。比方说，JavaScript 中属性 `@api Upper`对应于 HTML 属性 `-upper`.。
-
-### 在 JavaScript 中访问 HTML 通用属性
-
-不建议使用 HTML 的通用属性，即所有 HTML 元素通用的 `class`和 `title`等属性。
-
-某些 HTML 属性不会遵循我们的命名约定。如果需要在 JavaScript 中使用这些属性的 getter 或 setter，请使用下面列表的大小写
-
-| HTML 属性       | JavaScript 属性 |
-| :-------------- | :-------------- |
-| accesskey       | accessKey       |
-| bgcolor         | bgColor         |
-| colspan         | colSpan         |
-| contenteditable | contentEditable |
-| crossorigin     | crossOrigin     |
-| datetime        | dateTime        |
-| for             | htmlFor         |
-| formaction      | formAction      |
-| ismap           | isMap           |
-| maxlength       | maxLength       |
-| minlength       | minLength       |
-| novalidate\`    | noValidate      |
-| readonly        | readOnly        |
-| rowspan         | rowSpan         |
-| tabindex        | tabIndex        |
-| usemap          | useMap          |
-
-## 类属性
-
-### KingdeeElement 类属性
-
-- `contructor`: KingdeeElement 的构造函数
-- `hostElement`: 访问 shadow DOM 组件中的 HTMLElement
-- 模板访问：
-
-  - `template`: 组件的模板，使用 `this.tempalte`来访问
-  - `refs`: 访问指定模板中的 DOM 元素
-
-- 生命周期:
-
-  - `connectedCallback`
-  - `disconnectedCallback`
-  - `render`
-  - `renderedCallback`
-  - `errorCallback`
-
-### 继承的属性和方法
-
-- `accessKey`
-- `addEventListener`
-- `attachInternals`
-- `chilldren`
-- `childNodes`
-- `classList`
-- `dir`
-- `disaptchEvent`
-- `draggable`
-- `firstChild`
-- `firstElementChild`
-- `getAttribute`
-- `getAttributeNS`
-- `getBoundingClientRect`
-- `getElementsByClassName`
-- `getElementsByTagName`
-- `hasAttribute`
-- `hasAttributeNS`
-- `hidden`
-- `id`
-- `isConnected`
-- `lang`
-- `lastChild`
-- `lastElementChild`
-- `ownerDocument`
-- `querySelector`
-- `querySelectorAll`
-- `removeAttribute`
-- `removeAttributeNS`
-- `removeEventListener`
-- `setAttribute`
-- `setAttributeNS`
-- `shadowRoot`
-- `spellcheck`
-- `style`
-- `tabIndex`
-- `tagName`
-- `tempalte`
-- `title`
-
-## Web API 属性
-
-### 元素
-
-KWC 组件中，可以访问`Element` 元素的以下属性：
-
-`children`,`classList`,`className`,\``children`, `classList`, `className`, `firstElementChild`, `getAttribute`, `getAttributeNS`, `getBoundingClientRect`, `getElementsByClassName`, `getElementsByTagName`, `hasAttribute`, `id`, `lastElementChild`, `querySelector`, `querySelectorAll`, `removeAttribute`, `removeAttributeNS`, `setAttributeNS`, `setAttribute`, `shadowRoot`, `slot`
-
-### 事件
-
-KWC 组件中，可以访问`EventTarget`接口中以下属性：`addEventListener`, `dispatchEvent`, `removeEventListener`
-
-### HTMLElement
-
-KWC 组件中，可以访问`HTMLElement` 元素的以下属性：`accessKeyLabel`, `contentEditable`, `dataset`, `dir`, `hidden`, `isContentEditable`, `lang`, `offsetHeight`, `offsetLeft`, `offsetParent`, `offsetTop`, `offsetWidth`, `title`
-
-### Node
-
-KWC 组件中，可以访问 Node 元素的以下属性：`childNodes`, `firstChild`, `isConnected`, `lastChild`
-
-## Getter 和 Setter
-
-要在公共属性每次被赋值时执行逻辑，需要编写自定义的 setter。
-
-如果为公共属性编写了 setter 方法，那么必须同时实现 getter 方法。
-
-可以使用 `@api`来修饰 getter 或 setter，但是不能同时修饰两者。
-
-下面的示例将字符串转换为大写
+在 setter 中对输入数据进行格式化或验证，确保数据的正确性。下面的的示例将字符串转换为大写。
 
 ```html
 <template> {itemName} </template>
@@ -317,15 +201,45 @@ export default class TodoItem extends KingdeeElement {
 }
 ```
 
-## 布尔属性
+### 处理 HTML 布尔属性
 
-标准 HTML 的布尔属性通过向元素添加属性值来设置为 `true`。如果缺少该属性则默认为 `false`
+标准 HTML 的布尔属性通过向元素添加属性值来设置为 `true`。如果缺少该属性则默认为 `false`。
 
-## JavaScript 属性映射到 HTML 属性
+```html
+<!-- HTML 中使用布尔属性 -->
+<my-component disabled></my-component>
+```
 
-默认情况下，所有 HTML 属性都是响应式的。当组件 HTML 中某个属性值发生变化时，组件会重新渲染。
+在组件内部，可以通过 setter 处理布尔值属性的特殊逻辑：
 
-如果你需要将值作为属性传递给渲染的 HTML 时，请为该属性定一个 getter 和 setter，并调用 `setAttribute()`方法
+```javascript
+import { KingdeeElement, api } from '@kdcloudjs/kwc';
+
+export default class myComponent extends KingdeeElement {
+  _internalDisabled = false;
+
+  @api
+  get disabled() {
+    return this._internalDisabled;
+  }
+
+  set disabled(value) {
+    // 将各种可能的真值转换为布尔类型
+    this._internalDisabled = Boolean(value);
+
+    // 根据布尔值设置对应的 CSS 类
+    if (this._internalDisabled) {
+      this.classList.add('disabled');
+    } else {
+      this.classList.remove('disabled');
+    }
+  }
+}
+```
+
+### JavaScript 属性映射到 HTML 属性
+
+默认情况下，通过 `@api` 暴露的属性，当其值变化时，会反映到组件的 HTML Attribute 上，并且会触发组件的重新渲染。如果你需要将值作为属性传递给渲染的 HTML 时，请为该属性定一个 getter 和 setter，并调用 `setAttribute()`方法。
 
 ```js
 import { KingdeeElement } from '@kdcloudjs/kwc';
@@ -356,11 +270,12 @@ export default class MyComponent extends KingdeeElement {
 <x-my-component title="HELLO WORLD"></x-my-component>
 ```
 
-## 在 Getter 中管理依赖关系
+### 在 Getter 中管理依赖关系
 
-在 KWC 组件中，通过 HTML 属性传递的值，最终赋值给 JavaScript 属性时，顺序是不确定的。
+在「KWC」组件中，通过 HTML 属性传递值时，JavaScript 属性的赋值顺序是不确定的。当多个属性存在依赖关系时，需要使用 getter/setter 来管理这种依赖。
 
-举个例子，我们有一个表格组件，上面有两个彼此依赖的属性 `rows`和 `selectedRows`
+**问题场景**：
+一个表格组件有两个相互依赖的属性 `rows`和 `selectedRows`，`selectedRows` 的处理需要依赖 `rows` 的存在。
 
 ```html
 <template>
@@ -368,6 +283,7 @@ export default class MyComponent extends KingdeeElement {
 </template>
 ```
 
+**解决方案**：
 在 JavaScript 中，这两个属性的赋值顺序，可能是 `rows`先，也可能是 `selectedRows`先。由于顺序的不确定性，所以我们可以使用 getter/setter 来管理依赖，在访问方法中主动进行检查和处理依赖
 
 ```js

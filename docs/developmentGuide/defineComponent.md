@@ -1,25 +1,34 @@
 ---
 toc: content
-title: '组件结构'
+title: '创建组件'
 order: '2'
+glossary: HTML | CSS | JavaScript | Shadow DOM | 驼峰命名 | Pascal Case
 ---
 
-一个 KWC 组件必须包含：
+# 创建组件
 
-- 一个 HTML 文件
-- 一个 JavaScript 文件
+「KWC」组件基于 HTML 模板（视图）、CSS 样式（外观）与 JavaScript 逻辑（行为）三者组合实现，各司其职且紧密耦合，构成独立可复用的单元。
 
-作为 API 模块（如公共函数，工具方法等）的组件，可以不需要 HTML 文件。但是为了确保 KWC 框架能将组件自动关联，需要将它们放在与组件名称相同的组件文件夹中。
+本章将指导你创建和组织组件，掌握标准结构、必备文件与命名规范，为开发工作奠定基础。
 
-除此之外，组件文件夹中还可以包含以下类型的文件：
+## 组件结构简介
 
-- CSS 文件
-- 其他 JavaScript 文件
-- 单元测试文件
+一个「KWC」组件在文件系统中表现为一个**文件夹**，其中包含定义其视图、逻辑、样式和配置的多个文件。
 
-## 组件文件夹
+最典型的组件由三个核心文件构成：
 
-要定义一个组件，需要创建一个文件夹，将组件的文件直接放在 modules 文件夹下。如果你使用了 `@kdcloudjs/kd-custom-control-cli`命令行工具的话，在创建项目文件夹时，会自动为你创建。命令行工具构建的 KWC 项目结构如下所示：
+- **`componentName.html`**：定义组件的 HTML 视图结构。
+- **`componentName.js`**：定义组件的 JavaScript 逻辑与类。
+- **`componentName.css`**：定义组件的 CSS 样式（可选）。
+
+这些文件必须直接放在 `src/modules/` 目录下的同名文件夹中。
+
+## 创建组件文件夹
+
+### 文件夹结构
+
+**自动生成的文件夹及文件**
+当你使用 `kd-custom-control-cli` 脚手架创建项目时，会自动生成标准的项目目录结构，完整的「KWC」项目目录如下：
 
     myComponent
       ├──build
@@ -48,52 +57,54 @@ order: '2'
       ├──package.json
       ├──README.md
 
-文件夹及其文件必须具有相同的名称。但是 JavaScript 代码的工具文件可以有不同的名称，如 utils.js。
+**用户自定义的文件夹及文件**
+在上述 `src/modules/` 目录下，你可以创建自己的组件，组件文件夹与核心文件需同名（JavaScript 工具文件可例外，如 utils.js）。以 `myComponent` 组件为例，其文件夹内部结构如下：
 
     myComponent
       ├──myComponent.html
       ├──myComponent.js
-      ├──myComponent.js-meta.kwc
+      ├──myComponent.js-meta.kwc  # 自动生成的元数据文件
       ├──myComponent.css
-      ├──utils.js
-      ├──__tests__
+      ├──utils.js                 # 可选的工具文件
+      ├──__tests__                # 可选的测试目录
           ├──data
           ├──myComponent.test.js
 
 一个组件文件夹可以包含这些文件
 
-| 文件       | 是否必需 | 是否使用 cli 工具自动创建 | 描述                         |
-| :--------- | :------- | :------------------------ | :--------------------------- |
-| HTML       |          | 是                        | 为组件提供 UI 界面。         |
-| JavaScript | 是       | 是                        | 定义组件的逻辑。             |
-| meta.kwc   | 是       | 是                        | xml 格式，定义组件的元数据。 |
-| CSS        |          | 是                        | 为组件提供样式。             |
-| Utilities  |          |                           | 在组件之间共享代码。         |
-| Test       |          |                           | 为组件提供单元测试。         |
+| 文件       | 必需 | 是否 cli 自动创建 | 描述                         |
+| :--------- | :--- | :---------------- | :--------------------------- |
+| HTML       | 否   | 是                | 为组件提供 UI 界面。         |
+| JavaScript | 是   | 是                | 定义组件的逻辑。             |
+| meta.kwc   | 是   | 是                | XML 格式，定义组件的元数据。 |
+| CSS        | 否   | 是                | 为组件提供样式。             |
+| Utilities  | 否   | 否                | 在组件之间共享代码。         |
+| Test       | 否   | 否                | 为组件提供单元测试。         |
 
-## **名称命名规则**
+### 命名规则
 
-文件夹及其文件必须遵循以下命名规则：
+组件文件夹及其文件命名必须严格遵守以下规则，以确保框架正确识别和编译：
 
-- 必须以小写字母开头
-- 只能包含字母数字或下划线字符
-- 在命名空间中必须是唯一的
-- 不能包含空格
-- 不能以下划线结尾
-- 不能包含两个连续的下划线
-- 不能包含连字符(-)
+- 必须以**小写字母**开头。
+- 只能包含**字母、数字或下划线 (`_`)**。
+- 在同一个命名空间内必须**唯一**。
 
-**注意**
+:::warning
+**命名禁止事项**：
 
-每个组件需要直接保存在 src/modules 下。不能在一个组件文件夹中嵌套另一个组件。
+- ❌ `my-component` (包含连字符)
+- ❌ `1Component` (数字开头)
+- ❌ `component_` (下划线结尾)
+- ❌ `my__component` (连续下划线)
+  :::
 
-KWC 组件需要尽量匹配网页元素的 HTML 标准。而 HTML 标准要求自定义元素名称必须包含连字符。
+:::warning
+每个组件都必须直接放在 `src/modules/` 目录下，禁止在组件文件夹内嵌套其他组件文件夹。
+:::
 
-在我们的工程项目中，`modules`文件夹下的文件夹都是一个单独的命名空间，如 `modules/x`, `modules/abc`中，`x`和 `abc`都是一个独立的命名空间。
-
-由于文件夹不允许出现连字符，我们无法为组件命名为 `my-component`,但是我们又需要符合 HTML 标准的话，我们可以使用驼峰命名法来解决。
-
-将组件文件夹命名为 `myComponent`。组件文件夹的驼峰命名会在 HTML 标签中被处理为连字符形式。例如，在 html 文件中，我们要使用 `modules/x/myComponent`这个组件，我们需要使用 `x-my-component`:
+**驼峰命名法**
+组件文件夹不支持连字符命名，无法直接使用 `my-component` 这类命名形式；为同时兼容 HTML 标签的命名标准，可采用驼峰命名法实现。</br>
+将组件文件夹命名为 `myComponent`（驼峰形式），该命名会在 HTML 标签中自动转换为连字符形式。例如，若需在 HTML 文件中引用 `modules/x/myComponent` 组件，对应的标签名称为 `x-my-component`：
 
 ```html
 <!-- parent.html -->
@@ -102,13 +113,17 @@ KWC 组件需要尽量匹配网页元素的 HTML 标准。而 HTML 标准要求�
 </template>
 ```
 
-## HTML 文件
+---
 
-每个 UI 组件都必须有一个以 `<template>`为根标签的 HTML 文件。API 模块组件则不需要。
+## 组件文件简介
 
-HTML 文件遵循命名规范 `componentName.html`,如 `myComponent.html`
+### HTML 文件
 
-HTML 文件的实际内容需要在 `<template>`标签内创建组件的 HTML。即该模板元素包含了组件的 HTML。
+- **作用**：定义组件的用户界面结构。
+- **规范**：
+  - UI 组件必须包含以 `<template>` 为根标签的 HTML，组件结构需编写在根标签内；
+  - 文件名应与组件名一致，需遵循 `componentName.html` 规范，例如 `myComponent.html`。
+- **示例**：
 
 ```html
 <!-- myComponent.html -->
@@ -117,44 +132,42 @@ HTML 文件的实际内容需要在 `<template>`标签内创建组件的 HTML。
 </template>
 ```
 
-当组件渲染时，`<template>`会被替换为组件的名称，`<namespace-component-name>`。例如，我们的组件在 `modules/x/app`中，实际运行时会被渲染成 `<x-app>`,其中 `x`是命名空间：
+- **渲染**：组件渲染时，`<template>` 标签会被替换为组件对应的标签名。例如，存放于 `modules/x/app` 路径下的组件，运行时会被渲染为 `<x-app>`（其中 `x` 为命名空间）：<br>
+  <img src="https://tc-cdn.processon.com/po/5cd95fb0e4b06c0492ed0920-695a13f7bffe264705f970ff" style="max-width: 100%; width: 60%;" alt="命名空间-01">
 
-![ea16dda0cfbdd9ed74033235bd7f4c2b__preview_type=16.png](https://tc-cdn.processon.com/po/5cd95fb0e4b06c0492ed0920-695a13f7bffe264705f970ff)
+  <img src="https://tc-cdn.processon.com/po/5cd95fb0e4b06c0492ed0920-695a140b07ad417580a82b5e" style="max-width: 100%; width: 60%;" alt="命名空间-02">
 
-![3271f1b1a2ffb5847c624c12a6727229__preview_type=16.png](https://tc-cdn.processon.com/po/5cd95fb0e4b06c0492ed0920-695a140b07ad417580a82b5e)
+### CSS 文件
 
-## CSS 文件
+- **作用**：为组件提供私有化的样式规则，借助 Shadow DOM 实现样式封装，避免全局污染。
+- **规范**：文件名应与组件名一致，需遵循 `componentName.css` 规范，例如 `myComponent.css`。
+- **共享样式**：若需在多个组件间复用样式，可创建一个仅包含 CSS 文件的模块，在其他组件的 CSS 文件中使用 `@import` 引入。
 
-组件可以包含 CSS 文件，在其中使用标准 CSS 语法设置 KWC 组件的样式。
+### JavaScript 文件
 
-要设置组件样式，请在组件文件夹中创建一个与组件同名的 CSS 样式文件。例如组件名称为 `myComponent`,则样式表的名称为 `myComponent.css`.
+所有组件必须包含 JavaScript 文件作为主逻辑入口。
 
-如果希望在组件之间共享 CSS 样式规则，请创建一个仅包含 CSS 文件的模块。将模块导入 KWC 组件的 CSS 文件。
+- **作用**：定义组件的逻辑结构。
+- **规范**：
+  - JavaScript 文件遵循 ES6 模块规范；
+  - 文件名应与组件名一致，需遵循 `componentName.js` 规范，例如 `myComponent.js`；
+  - 通过 `import` 语句导入其他模块的类、函数或变量，通过 `export` 语句向外暴露当前模块的类、函数或变量。
 
-## JavaScript 文件
+#### UI 组件
 
-每个组件都必须要有一个 JavaScript 文件。如果组件有其 UI 元素，那么 JavaScript 文件则定义了 HTML 元素相关的属性以及交互逻辑。如果组件只是 API 模块，那么 JavaScript 文件则负责导出功能，以便其他组件使用。
-
-在 KWC 组件中，JavaScript 文件是 ES6 模块。默认情况下，模块中声明的所有内容都是本地的，其范围仅限于当前模块。
-
-如果要导入模块中声明的类，函数或者变量，请使用 `import`语句。
-
-如果允许其他代码使用模块中的类，函数或者变量，请使用 `export`语句。
-
-### UI 组件
-
-JavaScript 文件遵循命名约定 `componentName.js`,比方说 `myButton.js`
-
-每个 UI 组件都必须要包含一个有如下代码的 JavaScript 文件。
+针对带 UI 的「KWC」组件，其 JavaScript 文件必须包含以下核心代码，
 
 ```js
 import { KingdeeElement } from '@kdcloudjs/kwc';
 export default class MyComponent extends KingdeeElement {}
 ```
 
-KWC 组件中的核心模块是 `kwc`。在开发 UI 组件中都需要从 `kwc` 模块导入 `KingdeeElement`。`KingdeeElement`是标准 HTML 元素的自定义包装器。
+**代码解析**：
 
-创建属于你的组件，并扩展 `KingdeeElement`
+- `kwc` 是「KWC」组件的核心模块，开发 UI 组件时需从该模块导入 `KingdeeElement`。
+- 通过 `export default` 导出 `MyComponent` 类以供其他组件使用。该类必须是 UI 组件的默认导出，当前不支持导出其他变量或函数。
+- 组件类名需遵循 Pascal Case 命名法（每个单词首字母大写），例如 `myComponent.js` 对应的类名为 `MyComponent`。
+- 自定义组件需继承 `KingdeeElement`，示例如下：
 
 ```js
 export default class MyComponent extends KingdeeElement {
@@ -162,29 +175,32 @@ export default class MyComponent extends KingdeeElement {
 }
 ```
 
-`export default`关键字导出 `MyComponent`类以供其他组件使用。该类必须是 UI 组件的默认导出。**当前不支持导出 UI 组件中的其他变量或者函数。**
+UI 组件还包含以下 JavaScript 文件：
 
-作为组件类名，约定是使用 Pascal Case，即每个单词的第一个字母都是大写。比方说 myComponent.js，其类名是 `MyComponent`
+- 组件公共 API（公共属性、标注 `@api` 注释的方法）；
+- 私有变量和函数；
+- 事件处理逻辑；
+- 其他无法对外共享的文件。
 
-JavaScript 文件可以包含：
+#### API 模块组件
 
-- 组件的公共 API，即公共属性以及用 `@api`注释的方法
-- 私有变量和函数
-- 事件处理逻辑
+- **作用**：用于创建无 UI 界面的纯逻辑模块，作为共享代码的服务组件（如工具函数库、业务服务类）。
+- **结构**：与 UI 组件文件夹结构类似，但不包含 .html 文件。其 .js 文件通过 `export` 导出功能。
+- **示例**：
 
-除了组件本声明的 js 文件之外，UI 组件的文件夹还可以包含其他 JavaScript 文件。但是这些文件中的代码仅供组件自己使用，无法对外共享。
+```js
+import { KingdeeElement, api } from '@kdcloudjs/kwc';
 
-### API 模块组件
+export default class App extends KingdeeElement {
+  @api todo;
 
-没有 UI 的 KWC 组件可用作共享代码的 API 模块组件。API 模块组件有时称为服务组件。
+  get containerClass() {
+    return `todo ${this.todo.isCompleted ? 'completed' : ''}`;
+  }
+}
+```
 
-要在组件之间共享代码，请创建一个 ES6 模块并导出要公开的变量或函数。
-
-ES6 模块是一个显式导出其他模块可以使用的功能的文件。模块可以使你轻松构建代码，而不会污染全局范围。
-
-API 模块组件遵循与 UI 组件相同的文件夹结构和命名约定。不同的地方只是没有 HTML 文件。
-
-在使用 API 模块组件时，不允许使用 kwc 模块的这些导出语句
+在 API 模块中，禁止重新导出 `kwc` 模块的核心内容（如 `KingdeeElement`）。
 
 ```js
 // 禁止使用
@@ -193,63 +209,60 @@ export * from '@kdcloudjs/kwc';
 export { registerTemplate } from '@kdcloudjs/kwc';
 ```
 
-### KWC 导入声明
+#### 核心装饰器导入
 
-KWC 模块可以使用命名导入和默认导入。你可从 `kwc`模块中导入以下模块
+「KWC」模块支持命名导入和默认导入。你可从 `@kdcloudjs/kwc`模块中导入以下模块
 
 - `KingdeeElement`
 - `api`
 - `wire`
 - `track`
 
+**正确导入方式**
+
 ```js
 import { KingdeeElement, api, wire, track } from '@kdcloudjs/kwc';
 ```
 
-不允许使用 `kwc`模块的这些导入语句
+**错误导入方式**
 
 ```js
 //  不允许使用的导入语句
-import kwc from '@kdcloudjs/kwc';
-import * as kwc from '@kdcloudjs/kwc';
+import KWC from '@kdcloudjs/kwc';
+import * as KWC from '@kdcloudjs/kwc';
 import { registerTemplate } from '@kdcloudjs/kwc';
 import '@kdcloudjs/kwc';
 ```
 
-### 其他 JavaScript 文件
+#### 其他 JavaScript 文件
 
-除了创建 HTML 元素的 JavaScript 文件外，组件的文件夹还可以包含其他 JavaScript 文件。使用这些 JavaScript 文件在 UI 组件中构建代码，并共享来自 API 模块的代码。
+- **作用**：组件文件夹中，除定义 HTML 元素逻辑的主 JavaScript 文件外，可新增其他 JavaScript 文件，用于构建 UI 组件内部代码、复用 API 模块的代码逻辑。
+- **规范**：必须遵循 ES6 模块规范，且在所属组件文件夹内命名唯一，示例目录结构如下：
 
-这些 JavaScript 文件必须是 ES6 模块的，并且必须在其所在的组件文件夹中命名唯一。
-
+```bash
     myComponent
       ├──myComponent.html
       ├──myComponent.js
       ├──myComponent.css
       ├──someUtils.js
       ├──someMoreUtils.js
+```
 
-通过 `export`导出文件中的函数和变量，以便组件的主 JavaScript 文件可以导入，使用它们。
+- **使用**：通过 `export` 语句导出文件内的函数和变量，供组件的主 JavaScript 文件导入并调用。
 
-## 元数据文件
+### 元数据文件
 
-该 XML 文件用于定义一个自定义控件的元数据配置，用于描述基本信息、适用的页面类型、不同页面类型下的属性配置等。
+- **作用**：元数据文件为 XML 格式，用于定义自定义控件的元数据配置，涵盖控件基本信息、适用页面类型、不同页面类型下的属性配置等核心内容。
+- **使用**：使用`@kdcloudjs/kd-custom-control-cli`命令创建「KWC」项目，会自动生成与项目名对应的元数据文件：`myComponent.js-meta.kwc`。
 
-目前在自定义控件中支持 KWC 框架，因此使用`@kdcloudjs/kd-custom-control-cli`命令创建 KWC 项目。
+### 命名空间
 
-当使用 kd-custom-control-cli 命令创建 KWC 项目后，会自动生成与项目名对应的元数据文件：myComponent.js-meta.kwc。
+在「KWC」项目中，命名空间通常由项目标识或配置文件决定。例如，一个名为 `finance` 的项目，其下所有组件的命名空间可能就是 `finance`。在模板中引用时，需使用 `<finance-component-name>` 的形式。
 
-## 命名空间
+- **作用**：每个组件均归属某个命名空间，命名空间可整合相关组件，避免与其他命名空间的组件产生命名冲突。
+- **规范**：在 HTML 模板中引用指定命名空间的组件时，需遵循 [命名空间]-[组件名] 格式，例如引用 `kd` 命名空间的组件需写为 `kd-component-name`。
 
-每个组件都是命名空间的一部分，它将相关组件组合在一起，并防止与来自另一个命名空间的组件发生命名冲突。
-
-在 HTML 模板中，要引用 `kd`命名空间中的组件，请使用 `kd-component-name`。
-
-在苍穹自定义控制 KWC 框架中，默认使用方案 ID 作为命名空间。
-
-### 示例：使用 kd 和业务命名空间中的组件
-
-此组件使用 `kd-card`,这是 `kingdee-base-components`中提供的基础组件。`kd-card`组件中包含了一个自定义组件，假设业务命名空间是 `fi`，来自 `fi`的开发人员自行封装了组件用于展示标题，并将自定义组件命名为 `title`。
+- **示例**：
 
 ```html
 <template>
@@ -258,3 +271,5 @@ import '@kdcloudjs/kwc';
   </kd-card>
 </template>
 ```
+
+以上示例中，组件引用了 `kingdee-base-components` 提供的基础组件 `kd-card`，并在该组件内嵌套了业务命名空间 `fi` 下的自定义组件 `fi-title`（由 `fi` 域开发人员封装，用于展示业务标题）。

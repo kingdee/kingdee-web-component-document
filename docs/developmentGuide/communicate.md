@@ -1,36 +1,29 @@
 ---
 toc: content
 title: '组件通信'
-order: '6'
+order: '7'
+glossary: Web Components | 属性 | Properties | 事件 | Events
 ---
 
-Web Component 的组件通信，是指不同自定义元素（组件）之间，通过属性绑定、自定义事件、公共方法调用或中间媒介（事件总线 / 全局状态），实现数据传递、逻辑触发或状态同步的过程。
+# 组件通信
 
-组件通信是 KWC 开发的核心能力之一，KWC 作为基于 Web Component 封装的组件方案，其通信机制完全兼容并复用 Web Component 原生通信规范，以下进行简洁梳理，适配 KWC 开发场景落地。
+「KWC」基于 Web Components 标准，提供清晰的组件间通信模式，支持从父子通信到跨级通信。
+
+本章节将介绍「KWC」的组件通信体系，涵盖从基础的父子通信到复杂的跨级通信，帮助你构建松耦合、可维护的组件结构。
+
+## 通信体系架构
+
+「KWC」遵循**单向数据流**原则：数据主要从父组件流向子组件（通过属性 Properties），子组件通过触发事件（Events）通知父组件状态变化，由父组件（数据所有者）决定如何更新数据，并再次通过属性向下传递。
+
+「KWC」支持以下核心通信模式：
 
 ```plaintext
-Web Components 通信体系：
+「KWC」通信体系：
 ├── 父子组件通信
-│   ├── 下行：属性（Attributes/Properties）
-│   └── 上行：自定义事件（Custom Events）
-├── 同级/跨级组件通信
-│   ├── 事件冒泡（Event Bubbling）
-│   ├── 发布订阅模式（Pub/Sub）
-│   └── Context API（共享上下文）
-└── 与外部组件通信
-    ├── 查询选择器（Query Selector）
-    ├── 方法调用（Public Methods）
-    └── Slot 内容分发。（注：Slot 主要是单向的父→子）
+│   ├── 下行通信：属性（Attributes/Properties）
+│   └── 上行通信：自定义事件（Custom Events）
+└── 同级/跨级组件通信
+    ├── 事件冒泡（Event Bubbling）
+    └── 组件间消息中心（Message Service）
 
 ```
-
-KWC 组件封装并简化了组件内部、跨级和组件与组件间的通信，详细内容可参考相关章节：
-
-- 属性（Properties)
-- 自定义事件（Events)
-- 跨级通信
-  - 事件冒泡（bubbles 和 composed）
-  - 发布订阅模式（Pub/Sub）：KWC 提供的 messaService 工具
-  - 访问组件元素
-  - Shadow DOM
-  - 插槽（Slot）
