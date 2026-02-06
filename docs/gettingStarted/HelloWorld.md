@@ -88,8 +88,6 @@ glossary: 数据绑定 | 装饰器
 
 接下来，我们为组件添加样式。打开 _app.css_ 文件，替换内容如下：
 
-接下来，我们为组件添加样式。打开 _**app.css**_ 文件，替换其内容如下：
-
 ```css
 /* 1. 页面整体布局  */
 .page-container {
@@ -136,8 +134,6 @@ glossary: 数据绑定 | 装饰器
 ## 第三步：编写 JavaScript 逻辑
 
 最后，在 JavaScript 中定义组件的状态与行为。打开 _app.js_ 文件，替换内容如下：
-
-最后，在 JavaScript 中定义组件的状态与行为。打开 _**app.js**_ 文件，替换其内容如下：
 
 ```javascript
 import { KingdeeElement, track } from '@kdcloudjs/kwc';

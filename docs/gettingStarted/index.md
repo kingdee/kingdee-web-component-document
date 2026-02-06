@@ -61,7 +61,7 @@ glossary: Git | Node | 脚手架 | 包管理 | Visual Studio Code | VSCode
 1. **下载安装**：前往 [Node 官网](https://nodejs.org/zh-cn/download) 下载并完成安装，版本需高于 18.0 。
 2. **确认成功**：在 VSCode 内置终端，输入`node -v`命令，回车返回 node 版本表示安装成功。
 
-:::技巧
+:::success
 你也可以使用 nvm 管理 node 版本，输入`npm -v`查看相应版本。
 :::
 
@@ -78,7 +78,7 @@ glossary: Git | Node | 脚手架 | 包管理 | Visual Studio Code | VSCode
 1. **安装**：在 VSCode 内置终端，输入`npm install -g yarn`命令，完成包管理安装。
 2. **确认成功**：输入`yarn -v`命令，回车返回版本表示安装成功。
 
-:::注意
+:::info
 在完成此步骤时，请确保你以管理员身份运行。如遇报错，在 VSCode 内置终端，输入`Get-ExecutionPolicy`命令查看权限，如果显示`Restricted`，则需要通过输入`Set-ExecutionPolicy RemoteSigned`（推荐方式，允许本地脚本运行，阻止远程未签名脚本）或`Set-ExecutionPolicy Unrestricted`（谨慎选择，允许所有脚本运行）命令修改权限，以确保 yarn 包管理安装成功。
 :::
 
